@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E4053A582C56474C0049E0E1 /* FindPipGlobal.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4053A572C56474C0049E0E1 /* FindPipGlobal.swift */; };
+		E4053A5A2C5649970049E0E1 /* PipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4053A592C5649970049E0E1 /* PipsView.swift */; };
+		E4053A5C2C564D8E0049E0E1 /* PipCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */; };
+		E4053A5E2C564FE60049E0E1 /* PipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4053A5D2C564FE60049E0E1 /* PipView.swift */; };
 		E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412F9152C5384D300170B92 /* FileSystemAccess.swift */; };
 		E480D0DC2C5241EE009C83DB /* PyTermApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DB2C5241EE009C83DB /* PyTermApp.swift */; };
 		E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DD2C5241EE009C83DB /* ContentView.swift */; };
@@ -16,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E4053A572C56474C0049E0E1 /* FindPipGlobal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPipGlobal.swift; sourceTree = "<group>"; };
+		E4053A592C5649970049E0E1 /* PipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipsView.swift; sourceTree = "<group>"; };
+		E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipCommand.swift; sourceTree = "<group>"; };
+		E4053A5D2C564FE60049E0E1 /* PipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipView.swift; sourceTree = "<group>"; };
 		E412F9152C5384D300170B92 /* FileSystemAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemAccess.swift; sourceTree = "<group>"; };
 		E412F9172C5384EB00170B92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E480D0D82C5241EE009C83DB /* PyTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,8 +68,12 @@
 				E412F9172C5384EB00170B92 /* Info.plist */,
 				E480D0DB2C5241EE009C83DB /* PyTermApp.swift */,
 				E480D0DD2C5241EE009C83DB /* ContentView.swift */,
+				E4053A5D2C564FE60049E0E1 /* PipView.swift */,
 				E480D0EA2C524200009C83DB /* TerminalView.swift */,
+				E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */,
 				E412F9152C5384D300170B92 /* FileSystemAccess.swift */,
+				E4053A572C56474C0049E0E1 /* FindPipGlobal.swift */,
+				E4053A592C5649970049E0E1 /* PipsView.swift */,
 				E480D0DF2C5241EF009C83DB /* Assets.xcassets */,
 				E480D0E42C5241EF009C83DB /* PyTerm.entitlements */,
 				E480D0E12C5241EF009C83DB /* Preview Content */,
@@ -150,7 +162,11 @@
 				E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */,
 				E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */,
 				E480D0EB2C524200009C83DB /* TerminalView.swift in Sources */,
+				E4053A5C2C564D8E0049E0E1 /* PipCommand.swift in Sources */,
+				E4053A5E2C564FE60049E0E1 /* PipView.swift in Sources */,
 				E480D0DC2C5241EE009C83DB /* PyTermApp.swift in Sources */,
+				E4053A5A2C5649970049E0E1 /* PipsView.swift in Sources */,
+				E4053A582C56474C0049E0E1 /* FindPipGlobal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
