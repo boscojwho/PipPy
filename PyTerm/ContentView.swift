@@ -18,27 +18,6 @@ struct ContentView: View {
         } detail: {
             Text("Select an installation")
         }
-
-//        VStack {
-//            Picker("Pick an option", selection: .constant(0)) {
-//                Section {
-//                    Text("Option 1").tag(0)
-//                } header: {
-//                    Text("System")
-//                }
-//                Divider().padding(.leading)
-//                Section {
-//                    Text("Option 2").tag(1)
-//                    Text("Option 3").tag(2)
-//                } header: {
-//                    Text("User")
-//                }
-//       
-//            }
-//            PipsView()
-//            FileSystemAccessView()
-//            TerminalView()
-//        }
     }
 }
 

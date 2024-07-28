@@ -46,6 +46,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E406C9F72C57095E00D7E241 /* Prototype */ = {
+			isa = PBXGroup;
+			children = (
+				E480D0EA2C524200009C83DB /* TerminalView.swift */,
+				E412F9152C5384D300170B92 /* FileSystemAccess.swift */,
+			);
+			path = Prototype;
+			sourceTree = "<group>";
+		};
 		E480D0CF2C5241EE009C83DB = {
 			isa = PBXGroup;
 			children = (
@@ -69,11 +78,10 @@
 				E480D0DB2C5241EE009C83DB /* PyTermApp.swift */,
 				E480D0DD2C5241EE009C83DB /* ContentView.swift */,
 				E4053A5D2C564FE60049E0E1 /* PipView.swift */,
-				E480D0EA2C524200009C83DB /* TerminalView.swift */,
-				E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */,
-				E412F9152C5384D300170B92 /* FileSystemAccess.swift */,
-				E4053A572C56474C0049E0E1 /* FindPipGlobal.swift */,
 				E4053A592C5649970049E0E1 /* PipsView.swift */,
+				E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */,
+				E4053A572C56474C0049E0E1 /* FindPipGlobal.swift */,
+				E406C9F72C57095E00D7E241 /* Prototype */,
 				E480D0DF2C5241EF009C83DB /* Assets.xcassets */,
 				E480D0E42C5241EF009C83DB /* PyTerm.entitlements */,
 				E480D0E12C5241EF009C83DB /* Preview Content */,
@@ -311,6 +319,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bosco.ho.PyTerm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -339,6 +348,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bosco.ho.PyTerm;
 				PRODUCT_NAME = "$(TARGET_NAME)";

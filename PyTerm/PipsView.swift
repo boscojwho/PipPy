@@ -11,14 +11,15 @@ struct PipsView: View {
     @State private var usr: [URL] = []
     @State private var local: [URL] = []
     var body: some View {
-        ScrollView {
-            VStack {
+        List {
+            Section("System (Global)") {
                 ForEach(usr, id: \.self) { value in
                     NavigationLink(value: value) {
                         Text(value.lastPathComponent)
                     }
                 }
-                Divider()
+            }
+            Section("User (Local)") {
                 ForEach(local, id: \.self) { value in
                     NavigationLink(value: value) {
                         Text(value.lastPathComponent)
