@@ -11,6 +11,8 @@
 		E4053A5A2C5649970049E0E1 /* PipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4053A592C5649970049E0E1 /* PipsView.swift */; };
 		E4053A5C2C564D8E0049E0E1 /* PipCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */; };
 		E4053A5E2C564FE60049E0E1 /* PipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4053A5D2C564FE60049E0E1 /* PipView.swift */; };
+		E406C9F92C570B0600D7E241 /* PipClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E406C9F82C570B0600D7E241 /* PipClient.swift */; };
+		E406C9FB2C57101E00D7E241 /* ShellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E406C9FA2C57101E00D7E241 /* ShellClient.swift */; };
 		E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412F9152C5384D300170B92 /* FileSystemAccess.swift */; };
 		E480D0DC2C5241EE009C83DB /* PyTermApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DB2C5241EE009C83DB /* PyTermApp.swift */; };
 		E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DD2C5241EE009C83DB /* ContentView.swift */; };
@@ -24,6 +26,8 @@
 		E4053A592C5649970049E0E1 /* PipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipsView.swift; sourceTree = "<group>"; };
 		E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipCommand.swift; sourceTree = "<group>"; };
 		E4053A5D2C564FE60049E0E1 /* PipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipView.swift; sourceTree = "<group>"; };
+		E406C9F82C570B0600D7E241 /* PipClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipClient.swift; sourceTree = "<group>"; };
+		E406C9FA2C57101E00D7E241 /* ShellClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellClient.swift; sourceTree = "<group>"; };
 		E412F9152C5384D300170B92 /* FileSystemAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemAccess.swift; sourceTree = "<group>"; };
 		E412F9172C5384EB00170B92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E480D0D82C5241EE009C83DB /* PyTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,8 +83,10 @@
 				E480D0DD2C5241EE009C83DB /* ContentView.swift */,
 				E4053A5D2C564FE60049E0E1 /* PipView.swift */,
 				E4053A592C5649970049E0E1 /* PipsView.swift */,
+				E406C9F82C570B0600D7E241 /* PipClient.swift */,
 				E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */,
 				E4053A572C56474C0049E0E1 /* FindPipGlobal.swift */,
+				E406C9FA2C57101E00D7E241 /* ShellClient.swift */,
 				E406C9F72C57095E00D7E241 /* Prototype */,
 				E480D0DF2C5241EF009C83DB /* Assets.xcassets */,
 				E480D0E42C5241EF009C83DB /* PyTerm.entitlements */,
@@ -168,9 +174,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */,
+				E406C9F92C570B0600D7E241 /* PipClient.swift in Sources */,
 				E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */,
 				E480D0EB2C524200009C83DB /* TerminalView.swift in Sources */,
 				E4053A5C2C564D8E0049E0E1 /* PipCommand.swift in Sources */,
+				E406C9FB2C57101E00D7E241 /* ShellClient.swift in Sources */,
 				E4053A5E2C564FE60049E0E1 /* PipView.swift in Sources */,
 				E480D0DC2C5241EE009C83DB /* PyTermApp.swift in Sources */,
 				E4053A5A2C5649970049E0E1 /* PipsView.swift in Sources */,

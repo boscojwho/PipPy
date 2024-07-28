@@ -8,28 +8,37 @@
 import SwiftUI
 
 struct PipView: View {
-    @StateObject private var terminal: TerminalInterface = .init()
     let path: URL
+    @State private var pipClient: PipClient
+    init(path: URL) {
+        self.path = path
+        let curDir = path.deletingLastPathComponent().absoluteString.replacingOccurrences(of: "file://", with: "")
+        _pipClient = .init(
+            wrappedValue: .init(
+                installationPath: path,
+                shellClient: .init(currentDirectoryPath: curDir)
+            )
+        )
+    }
+        
     var body: some View {
         ScrollView {
             Text(path.absoluteString)
             VStack {
-                Text(terminal.output)
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    .background(Color.black)
-                    .foregroundColor(.green)
+                if pipClient.shellOutput.isEmpty {
+                    ProgressView()
+                } else {
+                    Text(pipClient.shellOutput)
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                        .background(Color.black)
+                        .foregroundColor(.green)
+                }
             }
         }
-        .onAppear {
-            let curDir = path.deletingLastPathComponent().absoluteString.replacingOccurrences(of: "file://", with: "")
-            terminal.currentDirectory = curDir
-            let command = "\(path.absoluteString.replacingOccurrences(of: "file://", with: "")) list"
-            terminal.executeCommand(command)
+        .task {
+            await pipClient.list()
         }
-        .onChange(of: terminal.output, perform: { value in
-            
-        })
     }
 }
 

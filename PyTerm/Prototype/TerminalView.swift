@@ -8,12 +8,14 @@
 import SwiftUI
 
 class TerminalInterface: ObservableObject {
+    @MainActor
     @Published var output: String = ""
     @Published var currentDirectory: String = FileManager.default.currentDirectoryPath
     
     private var process: Process?
     
-    func executeCommand(_ command: String) {
+    @discardableResult
+    func executeCommand(_ command: String) throws -> String {
         let task = Process()
         let pipe = Pipe()
         
@@ -23,25 +25,14 @@ class TerminalInterface: ObservableObject {
         task.executableURL = URL(fileURLWithPath: "/bin/zsh")
         task.currentDirectoryPath = currentDirectory
         
-        do {
-            try task.run()
-            
-            let data = pipe.fileHandleForReading.readDataToEndOfFile()
-            if let output = String(data: data, encoding: .utf8) {
-                DispatchQueue.main.async {
-                    self.output = output
-                }
-            }
-            
-            // Update current directory if it was changed by the command
-//            if let newPath = task.currentDirectoryPath {
-//                DispatchQueue.main.async {
-//                    self.currentDirectory = newPath
-//                }
-//            }
-        } catch {
-            print("Error: \(error.localizedDescription)")
+        try task.run()
+        
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(decoding: data, as: UTF8.self)
+        DispatchQueue.main.async {
+            self.output = output
         }
+        return output
     }
     
     func changeDirectory(_ path: String) {
@@ -77,7 +68,7 @@ struct TerminalView: View {
                 .padding()
             
             Button("Execute") {
-                terminal.executeCommand(command)
+                try! terminal.executeCommand(command)
             }
             
             TextField("Change directory", text: $newDirectory)
