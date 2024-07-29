@@ -12,15 +12,19 @@ class FileSystemAccess: ObservableObject {
     @Published var selectedURL: URL?
     @Published var canAccessURL: Bool = false
     
-    func selectDirectory() {
+    func selectDirectory(initialUrl: URL? = nil, selection: Binding<URL?> = .constant(nil)) {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
+        if let initialUrl {
+            panel.directoryURL = initialUrl
+        }
         
         if panel.runModal() == .OK {
             self.selectedURL = panel.url
             self.canAccessURL = panel.url?.startAccessingSecurityScopedResource() ?? false
+            selection.wrappedValue = panel.url
         }
     }
     

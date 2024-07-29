@@ -10,12 +10,17 @@ import SwiftUI
 struct PipPackageView: View {
     let package: PipListResponse
     @State private var pipClient: PipClient
-    init(pipInstallation: URL, package: PipListResponse) {
+    init(
+        pipInstallation: URL,
+        isProjectInstallation: Bool,
+        package: PipListResponse
+    ) {
         self.package = package
         _pipClient = .init(
             wrappedValue: .init(
                 installationPath: pipInstallation,
-                shellClient: .init(currentDirectoryPath: pipInstallation.deletingLastPathComponent().path())
+                isProjectInstallation: isProjectInstallation,
+                shellClient: .init(currentDirectoryPath: isProjectInstallation ? pipInstallation.path() :  pipInstallation.deletingLastPathComponent().path())
             )
         )
     }
@@ -46,6 +51,7 @@ struct PipPackageView: View {
 #Preview {
     PipPackageView(
         pipInstallation: .init(filePath: "/usr/bin/pip"),
+        isProjectInstallation: false,
         package: .mock()
     )
 }

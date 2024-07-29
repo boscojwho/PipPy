@@ -30,9 +30,15 @@ extension PipListResponse {
 @Observable
 final class PipClient {
     let installationPath: URL
+    let isProjectInstallation: Bool
     private var shellClient: ShellClient
-    init(installationPath: URL, shellClient: ShellClient) {
+    init(
+        installationPath: URL,
+        isProjectInstallation: Bool,
+        shellClient: ShellClient
+    ) {
         self.installationPath = installationPath
+        self.isProjectInstallation = isProjectInstallation
         self.shellClient = shellClient
     }
     
@@ -40,7 +46,11 @@ final class PipClient {
     
     func list() async throws -> [PipListResponse] {
         let responseData = try await shellClient.executeCommand(
-            PipCommand.generate(.list, arguments: ["--format=json"], installationPath.path())
+            PipCommand.generate(
+                .list,
+                arguments: ["--format=json"],
+                isProjectInstallation ? "pip" : installationPath.path()
+            )
         )
         let output = String(decoding: responseData, as: UTF8.self)
         shellOutput = output
@@ -56,7 +66,11 @@ final class PipClient {
     
     func show(_ packageName: String) async throws -> String {
         let responseData = try await shellClient.executeCommand(
-            PipCommand.generate(.show, arguments: [packageName], installationPath.path())
+            PipCommand.generate(
+                .show,
+                arguments: [packageName],
+                isProjectInstallation ? "pip" : installationPath.path()
+            )
         )
         let output = String(decoding: responseData, as: UTF8.self)
         shellOutput = output

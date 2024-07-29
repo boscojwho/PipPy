@@ -11,6 +11,7 @@ struct PipsView: View {
     @Binding var selectedInstallation: URL?
     @State private var usr: [URL] = []
     @State private var local: [URL] = []
+    @State private var python: [URL] = []
     
     var body: some View {
         List(selection: $selectedInstallation) {
@@ -28,11 +29,19 @@ struct PipsView: View {
                     }
                 }
             }
+            Section("Python Installations") {
+                ForEach(python, id: \.self) { value in
+                    NavigationLink(value: value) {
+                        Text(value.lastPathComponent)
+                    }
+                }
+            }
         }
         .onAppear {
             let pips = PipFinder.findGlobal()
             usr = pips[0]
             local = pips[1]
+            python = pips[2..<pips.endIndex].flatMap { $0 }
         }
     }
 }
