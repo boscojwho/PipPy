@@ -21,6 +21,12 @@ struct PipListResponse: Codable, Hashable, Identifiable {
     var id: String { name }
 }
 
+extension PipListResponse {
+    static func mock() -> PipListResponse {
+        .init(name: "pip", version: "1.0.0", editableProjectLocation: nil)
+    }
+}
+
 @Observable
 final class PipClient {
     let installationPath: URL
@@ -34,7 +40,7 @@ final class PipClient {
     
     func list() async throws -> [PipListResponse] {
         let responseData = try await shellClient.executeCommand(
-            PipCommand.generate(.list, installationPath.path())
+            PipCommand.generate(.list, arguments: ["--format=json"], installationPath.path())
         )
         let output = String(decoding: responseData, as: UTF8.self)
         shellOutput = output
@@ -46,5 +52,14 @@ final class PipClient {
         } else {
             return []
         }
+    }
+    
+    func show(_ packageName: String) async throws -> String {
+        let responseData = try await shellClient.executeCommand(
+            PipCommand.generate(.show, arguments: [packageName], installationPath.path())
+        )
+        let output = String(decoding: responseData, as: UTF8.self)
+        shellOutput = output
+        return output
     }
 }

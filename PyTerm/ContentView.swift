@@ -20,13 +20,17 @@ struct ContentView: View {
                     pipInstallation: selectedPip,
                     selectedPackage: $selectedPackage
                 )
-                .id(selectedPip.hashValue)
+                .id(selectedPip)
             } else {
                 Text("Select an installation")
             }
         } detail: {
-            if let selectedPackage {
-                Text(selectedPackage.name)
+            if let selectedPackage, let selectedPip {
+                PipPackageView(
+                    pipInstallation: selectedPip,
+                    package: selectedPackage
+                )
+                .id(selectedPackage)
             } else {
                 Text("Select a package")
             }

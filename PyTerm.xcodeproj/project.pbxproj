@@ -14,6 +14,7 @@
 		E406C9F92C570B0600D7E241 /* PipClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E406C9F82C570B0600D7E241 /* PipClient.swift */; };
 		E406C9FB2C57101E00D7E241 /* ShellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E406C9FA2C57101E00D7E241 /* ShellClient.swift */; };
 		E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412F9152C5384D300170B92 /* FileSystemAccess.swift */; };
+		E4559A3B2C57826B001AEB62 /* PipPackageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4559A3A2C57826B001AEB62 /* PipPackageView.swift */; };
 		E480D0DC2C5241EE009C83DB /* PyTermApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DB2C5241EE009C83DB /* PyTermApp.swift */; };
 		E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DD2C5241EE009C83DB /* ContentView.swift */; };
 		E480D0E02C5241EF009C83DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E480D0DF2C5241EF009C83DB /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		E406C9FA2C57101E00D7E241 /* ShellClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellClient.swift; sourceTree = "<group>"; };
 		E412F9152C5384D300170B92 /* FileSystemAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemAccess.swift; sourceTree = "<group>"; };
 		E412F9172C5384EB00170B92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E4559A3A2C57826B001AEB62 /* PipPackageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipPackageView.swift; sourceTree = "<group>"; };
 		E480D0D82C5241EE009C83DB /* PyTerm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PyTerm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E480D0DB2C5241EE009C83DB /* PyTermApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyTermApp.swift; sourceTree = "<group>"; };
 		E480D0DD2C5241EE009C83DB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				E480D0DD2C5241EE009C83DB /* ContentView.swift */,
 				E4053A592C5649970049E0E1 /* PipsView.swift */,
 				E4053A5D2C564FE60049E0E1 /* PipView.swift */,
+				E4559A3A2C57826B001AEB62 /* PipPackageView.swift */,
 				E406C9F82C570B0600D7E241 /* PipClient.swift */,
 				E4053A5B2C564D8E0049E0E1 /* PipCommand.swift */,
 				E4053A572C56474C0049E0E1 /* FindPipGlobal.swift */,
@@ -176,6 +179,7 @@
 				E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */,
 				E406C9F92C570B0600D7E241 /* PipClient.swift in Sources */,
 				E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */,
+				E4559A3B2C57826B001AEB62 /* PipPackageView.swift in Sources */,
 				E480D0EB2C524200009C83DB /* TerminalView.swift in Sources */,
 				E4053A5C2C564D8E0049E0E1 /* PipCommand.swift in Sources */,
 				E406C9FB2C57101E00D7E241 /* ShellClient.swift in Sources */,

@@ -26,7 +26,11 @@ enum PipCommand: String {
     case debug
     case help
     
-    static func generate(_ command: PipCommand, _ pipPath: String) -> String {
-        "\(pipPath) \(command.rawValue) --format=json"
+    static func generate(
+        _ command: PipCommand,
+        arguments: [String],
+        _ pipPath: String
+    ) -> String {
+        "\(pipPath) \(command.rawValue) \(arguments.joined(separator: " "))"
     }
 }
