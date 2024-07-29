@@ -10,8 +10,8 @@ import SwiftUI
 struct PipView: View {
     let pipInstallation: URL
     @State private var pipClient: PipClient
-    @Binding var selectedPackage: String?
-    init(pipInstallation: URL, selectedPackage: Binding<String?>) {
+    @Binding var selectedPackage: PipListResponse?
+    init(pipInstallation: URL, selectedPackage: Binding<PipListResponse?>) {
         self.pipInstallation = pipInstallation
         _pipClient = .init(
             wrappedValue: .init(
@@ -22,26 +22,30 @@ struct PipView: View {
         _selectedPackage = selectedPackage
     }
     
+    @State private var packages: [PipListResponse] = []
+    
     var body: some View {
         ScrollView {
             Text(pipInstallation.absoluteString)
-                .onTapGesture {
-                    selectedPackage = pipInstallation.lastPathComponent
-                }
-            VStack {
-                if pipClient.shellOutput.isEmpty {
+            LazyVStack {
+                if packages.isEmpty {
                     ProgressView()
                 } else {
-                    Text(pipClient.shellOutput)
-                        .padding()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                        .background(Color.black)
-                        .foregroundColor(.green)
+                    ForEach(packages) { package in
+                        Text(package.name)
+                            .onTapGesture {
+                                selectedPackage = package
+                            }
+                    }
                 }
             }
         }
         .task {
-            await pipClient.list()
+            do {
+                packages = try await pipClient.list()
+            } catch {
+                print(error)
+            }
         }
     }
 }

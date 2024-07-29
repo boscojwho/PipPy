@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedPip: URL?
-    @State private var selectedPackage: String?
+    @State private var selectedPackage: PipListResponse?
     
     var body: some View {
         NavigationSplitView {
@@ -26,7 +26,7 @@ struct ContentView: View {
             }
         } detail: {
             if let selectedPackage {
-                Text(selectedPackage)
+                Text(selectedPackage.name)
             } else {
                 Text("Select a package")
             }

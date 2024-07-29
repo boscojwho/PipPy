@@ -14,7 +14,7 @@ actor ShellClient {
     }
     
     @discardableResult
-    func executeCommand(_ command: String) throws -> String {
+    func executeCommand(_ command: String) throws -> Data {
         let task = Process()
         let pipe = Pipe()
         
@@ -26,7 +26,6 @@ actor ShellClient {
         
         try task.run()
         
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        return String(decoding: data, as: UTF8.self)
+        return pipe.fileHandleForReading.readDataToEndOfFile()
     }
 }
