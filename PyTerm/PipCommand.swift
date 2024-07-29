@@ -7,26 +7,26 @@
 
 import Foundation
 
-struct PipCommand {
+enum PipCommand: String {
+    case install
+    case download
+    case uninstall
+    case freeze
+    case inspect
+    case list
+    case show
+    case check
+    case config
+    case search
+    case cache
+    case index
+    case wheel
+    case hash
+    case completion
+    case debug
+    case help
     
-}
-
-extension PipCommand {
-    static let install = "install"
-    static let download = "download"
-    static let uninstall = "uninstall"
-    static let freeze = "freeze"
-    static let inspect = "inspect"
-    static let list = "list"
-    static let show = "show"
-    static let check = "check"
-    static let config = "config"
-    static let search = "search"
-    static let cache = "cache"
-    static let index = "index"
-    static let wheel = "wheel"
-    static let hash = "hash"
-    static let completion = "completion"
-    static let debug = "debug"
-    static let help = "help"
+    static func generate(_ command: PipCommand, _ pipPath: String) -> String {
+        "\(pipPath) \(command.rawValue)"
+    }
 }

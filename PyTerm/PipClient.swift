@@ -19,9 +19,7 @@ final class PipClient {
     var shellOutput: String = ""
     
     func list() async {
-        let pipCommand = """
-        \(installationPath.absoluteString.replacingOccurrences(of: "file://", with: "")) list
-        """
+        let pipCommand = PipCommand.generate(.list, installationPath.path())
         shellOutput = try! await shellClient.executeCommand(pipCommand)
     }
 }

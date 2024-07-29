@@ -12,7 +12,7 @@ struct ContentView: View {
         NavigationSplitView {
             PipsView()
                 .navigationDestination(for: URL.self) { value in
-                    PipView(path: value)
+                    PipView(pipInstallation: value)
                         .id(value.hashValue)
                 }
         } detail: {
