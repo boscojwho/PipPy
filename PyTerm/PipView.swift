@@ -9,7 +9,9 @@ import SwiftUI
 
 struct PipView: View {
     let pipInstallation: URL
-    init(pipInstallation: URL) {
+    @State private var pipClient: PipClient
+    @Binding var selectedPackage: String?
+    init(pipInstallation: URL, selectedPackage: Binding<String?>) {
         self.pipInstallation = pipInstallation
         _pipClient = .init(
             wrappedValue: .init(
@@ -17,13 +19,15 @@ struct PipView: View {
                 shellClient: .init(currentDirectoryPath: pipInstallation.deletingLastPathComponent().path())
             )
         )
+        _selectedPackage = selectedPackage
     }
-        
-    @State private var pipClient: PipClient
     
     var body: some View {
         ScrollView {
             Text(pipInstallation.absoluteString)
+                .onTapGesture {
+                    selectedPackage = pipInstallation.lastPathComponent
+                }
             VStack {
                 if pipClient.shellOutput.isEmpty {
                     ProgressView()
@@ -43,5 +47,8 @@ struct PipView: View {
 }
 
 #Preview {
-    PipView(pipInstallation: .init(filePath: "/usr/bin/pip"))
+    PipView(
+        pipInstallation: .init(filePath: "/usr/bin/pip"),
+        selectedPackage: .constant(nil)
+    )
 }

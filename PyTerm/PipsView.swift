@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct PipsView: View {
+    @Binding var selectedInstallation: URL?
     @State private var usr: [URL] = []
     @State private var local: [URL] = []
+    
     var body: some View {
-        List {
+        List(selection: $selectedInstallation) {
             Section("System (Global)") {
                 ForEach(usr, id: \.self) { value in
                     NavigationLink(value: value) {
@@ -36,5 +38,5 @@ struct PipsView: View {
 }
 
 #Preview {
-    PipsView()
+    PipsView(selectedInstallation: .constant(nil))
 }

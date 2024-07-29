@@ -8,15 +8,31 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedPip: URL?
+    @State private var selectedPackage: String?
+    
     var body: some View {
         NavigationSplitView {
-            PipsView()
-                .navigationDestination(for: URL.self) { value in
-                    PipView(pipInstallation: value)
-                        .id(value.hashValue)
-                }
+            PipsView(selectedInstallation: $selectedPip)
+        } content: {
+            if let selectedPip {
+                PipView(
+                    pipInstallation: selectedPip,
+                    selectedPackage: $selectedPackage
+                )
+                .id(selectedPip.hashValue)
+            } else {
+                Text("Select an installation")
+            }
         } detail: {
-            Text("Select an installation")
+            if let selectedPackage {
+                Text(selectedPackage)
+            } else {
+                Text("Select a package")
+            }
+        }
+        .onChange(of: selectedPip) {
+            selectedPackage = nil
         }
     }
 }
