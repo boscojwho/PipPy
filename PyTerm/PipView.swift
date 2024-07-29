@@ -14,7 +14,7 @@ struct PipView: View {
         _pipClient = .init(
             wrappedValue: .init(
                 installationPath: pipInstallation,
-                shellClient: .init(currentDirectoryPath: pipInstallation.path())
+                shellClient: .init(currentDirectoryPath: pipInstallation.deletingLastPathComponent().path())
             )
         )
     }
