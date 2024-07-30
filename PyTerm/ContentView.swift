@@ -47,7 +47,10 @@ struct ContentView: View {
                     let _ = item.loadObject(ofClass: URL.self) { url, error in
                         if let url {
                             Task { @MainActor in
-                                self.selectedPip = url
+//                                self.selectedPip = url
+                                let venvFinder = VenvFinder(projectUrl: url)
+                                let pipInstallations = venvFinder.findPipInstallations()
+                                self.selectedPip = pipInstallations.first
                             }
                         } else {
                             if let error {
