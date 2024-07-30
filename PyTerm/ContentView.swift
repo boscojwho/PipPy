@@ -11,6 +11,7 @@ import UniformTypeIdentifiers
 struct ContentView: View {
     @State private var selectedPip: URL?
     @State private var selectedPackage: PipListResponse?
+    @State private var projectPipInstallations: [URL] = []
     
     var body: some View {
         NavigationSplitView {
@@ -23,6 +24,16 @@ struct ContentView: View {
                     selectedPackage: $selectedPackage
                 )
                 .id(selectedPip)
+                .toolbar {
+                    if projectPipInstallations.isEmpty == false {
+                        Picker("Pick a Pip Installation", selection: $selectedPip) {
+                            ForEach(projectPipInstallations, id: \.self) { pip in
+                                Text(pip.lastPathComponent)
+                                    .tag(Optional(pip))
+                            }
+                        }
+                    }
+                }
             } else {
                 Text("Select an installation")
             }
@@ -50,6 +61,7 @@ struct ContentView: View {
 //                                self.selectedPip = url
                                 let venvFinder = VenvFinder(projectUrl: url)
                                 let pipInstallations = venvFinder.findPipInstallations()
+                                self.projectPipInstallations = pipInstallations
                                 self.selectedPip = pipInstallations.first
                             }
                         } else {
