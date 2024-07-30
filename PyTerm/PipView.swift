@@ -21,7 +21,8 @@ struct PipView: View {
             wrappedValue: .init(
                 installationPath: pipInstallation,
                 isProjectInstallation: isProjectInstallation,
-                shellClient: .init(currentDirectoryPath: isProjectInstallation ? pipInstallation.path() :  pipInstallation.deletingLastPathComponent().path())
+                pipExecutable: pipInstallation.lastPathComponent,
+                shellClient: .init(currentDirectoryPath: pipInstallation.deletingLastPathComponent().path())
             )
         )
         _selectedPackage = selectedPackage

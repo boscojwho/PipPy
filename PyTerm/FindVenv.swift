@@ -20,7 +20,7 @@ struct VenvFinder {
                 options: []
             )
             let venvs = contents.filter { $0.hasDirectoryPath && $0.lastPathComponent == ".venv" }
-            print(venvs)
+            print(#function, venvs)
             return venvs
         } catch {
             print(error)

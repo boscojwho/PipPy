@@ -19,8 +19,9 @@ struct PipPackageView: View {
         _pipClient = .init(
             wrappedValue: .init(
                 installationPath: pipInstallation,
-                isProjectInstallation: isProjectInstallation,
-                shellClient: .init(currentDirectoryPath: isProjectInstallation ? pipInstallation.path() :  pipInstallation.deletingLastPathComponent().path())
+                isProjectInstallation: isProjectInstallation, 
+                pipExecutable: pipInstallation.lastPathComponent,
+                shellClient: .init(currentDirectoryPath: pipInstallation.deletingLastPathComponent().path())
             )
         )
     }

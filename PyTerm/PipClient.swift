@@ -31,15 +31,22 @@ extension PipListResponse {
 final class PipClient {
     let installationPath: URL
     let isProjectInstallation: Bool
+    let pipExecutable: String?
     private var shellClient: ShellClient
     init(
         installationPath: URL,
         isProjectInstallation: Bool,
+        pipExecutable: String?,
         shellClient: ShellClient
     ) {
         self.installationPath = installationPath
         self.isProjectInstallation = isProjectInstallation
+        self.pipExecutable = pipExecutable
         self.shellClient = shellClient
+    }
+    
+    private var pipName: String {
+        pipExecutable ?? "pip"
     }
     
     var shellOutput: String = ""
@@ -49,7 +56,7 @@ final class PipClient {
             PipCommand.generate(
                 .list,
                 arguments: ["--format=json"],
-                isProjectInstallation ? "pip" : installationPath.path()
+                installationPath.path()
             )
         )
         let output = String(decoding: responseData, as: UTF8.self)
@@ -69,7 +76,7 @@ final class PipClient {
             PipCommand.generate(
                 .show,
                 arguments: [packageName],
-                isProjectInstallation ? "pip" : installationPath.path()
+                installationPath.path()
             )
         )
         let output = String(decoding: responseData, as: UTF8.self)

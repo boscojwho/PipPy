@@ -20,12 +20,12 @@ struct ContentView: View {
             if let selectedPip {
                 PipView(
                     pipInstallation: selectedPip,
-                    isProjectInstallation: isProjectInstallation(),
+                    isProjectInstallation: hasVenv(),
                     selectedPackage: $selectedPackage
                 )
                 .id(selectedPip)
                 .toolbar {
-                    if projectPipInstallations.isEmpty == false {
+                    if hasVenv(), projectPipInstallations.isEmpty == false {
                         Picker("Pick a Pip Installation", selection: $selectedPip) {
                             ForEach(projectPipInstallations, id: \.self) { pip in
                                 Text(pip.lastPathComponent)
@@ -41,7 +41,7 @@ struct ContentView: View {
             if let selectedPackage, let selectedPip {
                 PipPackageView(
                     pipInstallation: selectedPip,
-                    isProjectInstallation: isProjectInstallation(),
+                    isProjectInstallation: hasVenv(),
                     package: selectedPackage
                 )
                 .id(selectedPackage)
@@ -76,9 +76,9 @@ struct ContentView: View {
         }
     }
     
-    private func isProjectInstallation() -> Bool {
+    private func hasVenv() -> Bool {
         guard let selectedPip else { return false }
-        return !selectedPip.lastPathComponent.hasPrefix("pip")
+        return selectedPip.pathComponents.first { $0 == ".venv" } != nil
     }
 }
 
