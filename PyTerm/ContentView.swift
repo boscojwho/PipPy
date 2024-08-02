@@ -60,7 +60,7 @@ struct ContentView: View {
                             Task { @MainActor in
 //                                self.selectedPip = url
                                 let venvFinder = VenvFinder(projectUrl: url)
-                                let pipInstallations = venvFinder.findPipInstallations()
+                                let pipInstallations = venvFinder.findPipInstallations(assumesVenvName: false)
                                 self.projectPipInstallations = pipInstallations
                                 self.selectedPip = pipInstallations.first
                             }
