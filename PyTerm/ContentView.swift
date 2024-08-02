@@ -61,8 +61,18 @@ struct ContentView: View {
 //                                self.selectedPip = url
                                 let venvFinder = VenvFinder(projectUrl: url)
                                 let pipInstallations = venvFinder.findPipInstallations(assumesVenvName: false)
-                                self.projectPipInstallations = pipInstallations
-                                self.selectedPip = pipInstallations.first
+                                if pipInstallations.isEmpty {
+                                    let pythonProgram = "python3"
+                                    let shellClient = ShellClient(currentDirectoryPath: url.path())
+                                    let whichPython = try await shellClient.executeCommand("which \(pythonProgram)")
+                                    let python = String(decoding: whichPython, as: UTF8.self)
+                                    let pythonInterpreter = URL(filePath: python)
+                                    print(pythonInterpreter.path(percentEncoded: false))
+//                                    shellClient.executeCommand("which pip")
+                                } else {
+                                    self.projectPipInstallations = pipInstallations
+                                    self.selectedPip = pipInstallations.first
+                                }
                             }
                         } else {
                             if let error {
