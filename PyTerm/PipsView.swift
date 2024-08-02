@@ -6,15 +6,24 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PipsView: View {
     @Binding var selectedInstallation: URL?
     @State private var usr: [URL] = []
     @State private var local: [URL] = []
     @State private var python: [URL] = []
+    @Query private var projectBookmarks: [ProjectBookmark]
     
     var body: some View {
         List(selection: $selectedInstallation) {
+            Section("Projects") {
+                ForEach(projectBookmarks) { value in
+                    NavigationLink(value: value) {
+                        Text(value.url.lastPathComponent)
+                    }
+                }
+            }
             Section("System (Global)") {
                 ForEach(usr, id: \.self) { value in
                     NavigationLink(value: value) {
