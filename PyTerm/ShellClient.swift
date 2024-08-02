@@ -24,6 +24,8 @@ actor ShellClient {
         task.executableURL = URL(fileURLWithPath: "/bin/zsh")
         task.currentDirectoryPath = currentDirectoryPath
         
+        print("\(task.executableURL!.path()) ~> \(task.currentDirectoryPath): \(task.arguments!.joined(separator: " "))")
+        
         try task.run()
         
         return pipe.fileHandleForReading.readDataToEndOfFile()
