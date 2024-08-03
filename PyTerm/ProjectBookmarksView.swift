@@ -27,14 +27,16 @@ struct ProjectBookmarksView: View {
                 )
                 .lineLimit(3)
             } else {
-                ForEach(bookmarks) { bookmark in
-                    ProjectBookmarkView(bookmark: bookmark)
-                }
-                .contextMenu {
-                    let buttonText = selectedBookmarks.count > 1 ? "Remove Bookmarks (\(selectedBookmarks.count))" : "Remove Bookmark"
-                    Button(buttonText, systemImage: "minus.circle", role: .destructive) {
-                        for bookmark in selectedBookmarks {
-                            modelContext.delete(bookmark)
+                Section("Projects") {
+                    ForEach(bookmarks) { bookmark in
+                        ProjectBookmarkView(bookmark: bookmark)
+                    }
+                    .contextMenu {
+                        let buttonText = selectedBookmarks.count > 1 ? "Remove Bookmarks (\(selectedBookmarks.count))" : "Remove Bookmark"
+                        Button(buttonText, systemImage: "minus.circle", role: .destructive) {
+                            for bookmark in selectedBookmarks {
+                                modelContext.delete(bookmark)
+                            }
                         }
                     }
                 }

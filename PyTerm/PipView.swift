@@ -31,18 +31,21 @@ struct PipView: View {
     @State private var packages: [PipListResponse] = []
     
     var body: some View {
-        ScrollView {
-            Text(pipInstallation.absoluteString)
-            LazyVStack {
+        List(selection: $selectedPackage) {
+            Section {
                 if packages.isEmpty {
                     ProgressView()
                 } else {
                     ForEach(packages) { package in
-                        Text(package.name)
-                            .onTapGesture {
-                                selectedPackage = package
-                            }
+                        NavigationLink(value: package) {
+                            Text(package.name)
+                        }
                     }
+                }
+            } header: {
+                GroupBox {
+                    Text(pipInstallation.path())
+                        .lineLimit(nil)
                 }
             }
         }
