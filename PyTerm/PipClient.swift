@@ -71,7 +71,7 @@ final class PipClient {
         }
     }
     
-    func show(_ packageName: String) async throws -> String {
+    func show(_ packageName: String) async throws -> PipPackage {
         let responseData = try await shellClient.executeCommand(
             PipCommand.generate(
                 .show,
@@ -81,6 +81,22 @@ final class PipClient {
         )
         let output = String(decoding: responseData, as: UTF8.self)
         shellOutput = output
-        return output
+        
+        /// RFC-compliant header format.
+        let fields: [(String, String)] = output
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .components(separatedBy: .newlines)
+            .compactMap {
+                guard $0.isEmpty == false else { return nil }
+                let field = $0.split(separator: ":", maxSplits: 1).map { String($0) }
+                return (
+                    field[0], field.last?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                )
+            }
+        let kvMap = Dictionary(grouping: fields) { $0.0 }
+            .compactMapValues { $0.first?.1 }
+        let data = try JSONEncoder().encode(kvMap)
+        let package = try JSONDecoder().decode(PipPackage.self, from: data)
+        return package
     }
 }
