@@ -9,13 +9,48 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct ContentView: View {
+    
+    private enum SidebarFilter: Int, Identifiable, CaseIterable, CustomStringConvertible {
+        case system
+        case projects
+        
+        var id: Int { rawValue }
+        var description: String {
+            switch self {
+            case .system:
+                "System"
+            case .projects:
+                "Projects"
+            }
+        }
+    }
+    
+    @State private var sidebarFilter: SidebarFilter = .system
     @State private var selectedPip: URL?
     @State private var selectedPackage: PipListResponse?
     @State private var projectPipInstallations: [URL] = []
     
     var body: some View {
         NavigationSplitView {
-            PipsView(selectedInstallation: $selectedPip)
+            Group {
+                switch sidebarFilter {
+                case .system:
+                    PipsView(selectedInstallation: $selectedPip)
+                case .projects:
+                    ProjectBookmarksView()
+                }
+            }
+            .overlay(alignment: .bottom) {
+                Picker("", selection: $sidebarFilter) {
+                    ForEach(SidebarFilter.allCases) { filter in
+                        Text(filter.description)
+                            .tag(filter)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding()
+                .background()
+            }
         } content: {
             if let selectedPip {
                 PipView(

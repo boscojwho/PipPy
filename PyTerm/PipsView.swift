@@ -17,13 +17,6 @@ struct PipsView: View {
     
     var body: some View {
         List(selection: $selectedInstallation) {
-            Section("Projects") {
-                ForEach(projectBookmarks) { value in
-                    NavigationLink(value: value) {
-                        Text(value.url.lastPathComponent)
-                    }
-                }
-            }
             Section("System (Global)") {
                 ForEach(usr, id: \.self) { value in
                     NavigationLink(value: value) {

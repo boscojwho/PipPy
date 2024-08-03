@@ -15,8 +15,17 @@ struct ProjectBookmarksView: View {
     
     var body: some View {
         List(selection: $selectedBookmark) {
-            ForEach(bookmarks) { bookmark in
-                ProjectBookmarkView(bookmark: bookmark)
+            if bookmarks.isEmpty {
+                ContentUnavailableView(
+                    "Add Projects Here",
+                    systemImage: "square.and.arrow.down",
+                    description: Text("Drag and drop Python project directories here.")
+                )
+                .lineLimit(3)
+            } else {
+                ForEach(bookmarks) { bookmark in
+                    ProjectBookmarkView(bookmark: bookmark)
+                }
             }
         }
         .onDrop(of: [.url], isTargeted: nil) { providers in
