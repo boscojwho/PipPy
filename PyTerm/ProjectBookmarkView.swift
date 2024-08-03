@@ -14,11 +14,6 @@ struct ProjectBookmarkView: View {
         NavigationLink(value: bookmark) {
             Text(bookmark.url.lastPathComponent)
         }
-        .contextMenu {
-            Button("Remove Bookmark", systemImage: "minus.circle", role: .destructive) {
-                modelContext.delete(bookmark)
-            }
-        }
     }
 }
 
