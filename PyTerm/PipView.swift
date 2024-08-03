@@ -29,6 +29,9 @@ struct PipView: View {
     }
     
     @State private var packages: [PipListResponse] = []
+    @State private var filteredPackages: [PipListResponse] = []
+    @State private var isSearching = false
+    @State private var searchText: String = ""
     
     var body: some View {
         List(selection: $selectedPackage) {
@@ -36,15 +39,23 @@ struct PipView: View {
                 if packages.isEmpty {
                     ProgressView()
                 } else {
-                    ForEach(packages) { package in
+                    ForEach(listData()) { package in
                         NavigationLink(value: package) {
-                            Text(package.name)
+                            HStack {
+                                Text(package.name)
+                                    .fontWeight(.medium)
+                                Spacer()
+                                Text(package.version)
+                                    .monospaced()
+                            }
                         }
                     }
                 }
             } header: {
                 GroupBox {
                     Text(pipInstallation.path())
+                        .truncationMode(.head)
+                        .font(.title3)
                         .lineLimit(nil)
                 }
             }
@@ -55,6 +66,18 @@ struct PipView: View {
             } catch {
                 print(error)
             }
+        }
+        .searchable(text: $searchText, isPresented: $isSearching, prompt: "Filter by package name...")
+        .onChange(of: searchText) { _, newValue in
+            filteredPackages = packages.filter { $0.name.contains(newValue) }
+        }
+    }
+    
+    private func listData() -> [PipListResponse] {
+        if isSearching, searchText.isEmpty == false, filteredPackages.isEmpty == false {
+            return filteredPackages
+        } else {
+            return packages
         }
     }
 }

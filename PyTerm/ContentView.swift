@@ -41,6 +41,7 @@ struct ContentView: View {
                     ProjectBookmarksView(selectedBookmarks: $selectedBookmarks)
                 }
             }
+            .listStyle(.sidebar)
             .overlay(alignment: .bottom) {
                 Picker("", selection: $sidebarFilter) {
                     ForEach(SidebarFilter.allCases) { filter in

@@ -39,6 +39,7 @@ struct PipPackageView: View {
                 }
             }
         }
+        .contentMargins(12)
         .task {
             do {
                 packageInfo = try await pipClient.show(package.name)
