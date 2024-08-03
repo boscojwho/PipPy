@@ -53,32 +53,42 @@ struct ContentView: View {
                 .background()
             }
         } content: {
-            switch sidebarFilter {
-            case .system:
-                Group {
-                    if let selectedPip {
-                        PipView(
-                            pipInstallation: selectedPip,
-                            isProjectInstallation: hasVenv(),
-                            selectedPackage: $selectedPackage
-                        )
-                        .id(selectedPip)
-                        .toolbar {
-                            if hasVenv(), projectPipInstallations.isEmpty == false {
-                                Picker("Pick a Pip Installation", selection: $selectedPip) {
-                                    ForEach(projectPipInstallations, id: \.self) { pip in
-                                        Text(pip.lastPathComponent)
-                                            .tag(Optional(pip))
-                                    }
+            Group {
+                if let selectedPip {
+                    PipView(
+                        pipInstallation: selectedPip,
+                        isProjectInstallation: hasVenv(),
+                        selectedPackage: $selectedPackage
+                    )
+                    .id(selectedPip)
+                    .toolbar {
+                        if hasVenv(), projectPipInstallations.isEmpty == false {
+                            Picker("Pick a Pip Installation", selection: $selectedPip) {
+                                ForEach(projectPipInstallations, id: \.self) { pip in
+                                    Text(pip.lastPathComponent)
+                                        .tag(Optional(pip))
                                 }
                             }
                         }
-                    } else {
-                        Text("Select an installation")
+                    }
+                } else {
+                    switch sidebarFilter {
+                    case .system:
+                        ContentUnavailableView(
+                            "Select an Installation",
+                            systemImage: "folder.badge.gearshape",
+                            description: Text("Select a PIP installation from the sidebar to view its installed packages.")
+                        )
+                        .lineLimit(3)
+                    case .projects:
+                        ContentUnavailableView(
+                            "Select a Project",
+                            systemImage: "folder",
+                            description: Text("Select a project from the sidebar to view its pip installations and installed packages.")
+                        )
+                        .lineLimit(3)
                     }
                 }
-            case .projects:
-                Text(selectedBookmarks.first?.url.path() ?? "Select a project")
             }
         } detail: {
             if let selectedPackage, let selectedPip {
@@ -94,6 +104,14 @@ struct ContentView: View {
         }
         .onChange(of: selectedPip) {
             selectedPackage = nil
+        }
+        .onChange(of: selectedBookmarks.first) { _, newValue in
+            if let bookmark = newValue {
+                let venvFinder = VenvFinder(projectUrl: bookmark.url)
+                let pipInstallations = venvFinder.findPipInstallations(assumesVenvName: false)
+                self.projectPipInstallations = pipInstallations
+                self.selectedPip = pipInstallations.first
+            }
         }
         .onDrop(of: [.url], isTargeted: nil) { providers in
             for item in providers {
