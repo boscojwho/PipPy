@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class ProjectBookmark {
+final class ProjectBookmark: Hashable {
     let url: URL
     init(url: URL) {
         self.url = url

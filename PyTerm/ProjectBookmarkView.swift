@@ -8,10 +8,16 @@
 import SwiftUI
 
 struct ProjectBookmarkView: View {
+    @Environment(\.modelContext) private var modelContext
     let bookmark: ProjectBookmark
     var body: some View {
-        GroupBox {
+        NavigationLink(value: bookmark) {
             Text(bookmark.url.lastPathComponent)
+        }
+        .contextMenu {
+            Button("Remove Bookmark", systemImage: "minus.circle", role: .destructive) {
+                modelContext.delete(bookmark)
+            }
         }
     }
 }

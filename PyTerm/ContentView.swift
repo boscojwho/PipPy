@@ -28,6 +28,7 @@ struct ContentView: View {
     @State private var sidebarFilter: SidebarFilter = .system
     @State private var selectedPip: URL?
     @State private var selectedPackage: PipListResponse?
+    @State private var selectedBookmarks = Set<ProjectBookmark>()
     @State private var projectPipInstallations: [URL] = []
     
     var body: some View {
@@ -37,7 +38,7 @@ struct ContentView: View {
                 case .system:
                     PipsView(selectedInstallation: $selectedPip)
                 case .projects:
-                    ProjectBookmarksView()
+                    ProjectBookmarksView(selectedBookmarks: $selectedBookmarks)
                 }
             }
             .overlay(alignment: .bottom) {
@@ -52,25 +53,32 @@ struct ContentView: View {
                 .background()
             }
         } content: {
-            if let selectedPip {
-                PipView(
-                    pipInstallation: selectedPip,
-                    isProjectInstallation: hasVenv(),
-                    selectedPackage: $selectedPackage
-                )
-                .id(selectedPip)
-                .toolbar {
-                    if hasVenv(), projectPipInstallations.isEmpty == false {
-                        Picker("Pick a Pip Installation", selection: $selectedPip) {
-                            ForEach(projectPipInstallations, id: \.self) { pip in
-                                Text(pip.lastPathComponent)
-                                    .tag(Optional(pip))
+            switch sidebarFilter {
+            case .system:
+                Group {
+                    if let selectedPip {
+                        PipView(
+                            pipInstallation: selectedPip,
+                            isProjectInstallation: hasVenv(),
+                            selectedPackage: $selectedPackage
+                        )
+                        .id(selectedPip)
+                        .toolbar {
+                            if hasVenv(), projectPipInstallations.isEmpty == false {
+                                Picker("Pick a Pip Installation", selection: $selectedPip) {
+                                    ForEach(projectPipInstallations, id: \.self) { pip in
+                                        Text(pip.lastPathComponent)
+                                            .tag(Optional(pip))
+                                    }
+                                }
                             }
                         }
+                    } else {
+                        Text("Select an installation")
                     }
                 }
-            } else {
-                Text("Select an installation")
+            case .projects:
+                Text(selectedBookmarks.first?.url.path() ?? "Select a project")
             }
         } detail: {
             if let selectedPackage, let selectedPip {

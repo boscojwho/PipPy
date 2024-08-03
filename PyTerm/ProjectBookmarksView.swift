@@ -10,11 +10,15 @@ import SwiftData
 
 struct ProjectBookmarksView: View {
     @Environment(\.modelContext) var modelContext
+    @Binding var selectedBookmarks: Set<ProjectBookmark>
+    init(selectedBookmarks: Binding<Set<ProjectBookmark>>) {
+        _selectedBookmarks = selectedBookmarks
+    }
+    
     @Query private var bookmarks: [ProjectBookmark]
-    @State private var selectedBookmark: ProjectBookmark?
     
     var body: some View {
-        List(selection: $selectedBookmark) {
+        List(selection: $selectedBookmarks) {
             if bookmarks.isEmpty {
                 ContentUnavailableView(
                     "Add Projects Here",
@@ -65,5 +69,5 @@ struct ProjectBookmarksView: View {
 }
 
 #Preview {
-    ProjectBookmarksView()
+    ProjectBookmarksView(selectedBookmarks: .constant([]))
 }
