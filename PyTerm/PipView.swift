@@ -28,7 +28,7 @@ struct PipView: View {
         _selectedPackage = selectedPackage
     }
     
-    @State private var packages: [PipListResponse] = []
+    @State private var packages: [PipListResponse]?
     @State private var filteredPackages: [PipListResponse] = []
     @State private var isSearching = false
     @State private var searchText: String = ""
@@ -36,7 +36,7 @@ struct PipView: View {
     var body: some View {
         List(selection: $selectedPackage) {
             Section {
-                if packages.isEmpty {
+                if packages == nil {
                     ProgressView()
                 } else {
                     ForEach(listData()) { package in
@@ -60,6 +60,20 @@ struct PipView: View {
                 }
             }
         }
+        .padding(.bottom, 60)
+        .overlay(alignment: .bottom) {
+            if let packages {
+                GroupBox {
+                    HStack {
+                        Spacer()
+                        Text("^[\(packages.count) packages](inflected: true) installed")
+                        Spacer()
+                    }
+                }
+                .padding()
+                .background()
+            }
+        }
         .task {
             do {
                 packages = try await pipClient.list()
@@ -69,7 +83,7 @@ struct PipView: View {
         }
         .searchable(text: $searchText, isPresented: $isSearching, prompt: "Filter by package name...")
         .onChange(of: searchText) { _, newValue in
-            filteredPackages = packages.filter { $0.name.contains(newValue) }
+            filteredPackages = packages?.filter { $0.name.contains(newValue) } ?? []
         }
     }
     
@@ -77,7 +91,7 @@ struct PipView: View {
         if isSearching, searchText.isEmpty == false, filteredPackages.isEmpty == false {
             return filteredPackages
         } else {
-            return packages
+            return packages ?? []
         }
     }
 }
