@@ -73,7 +73,9 @@ struct VenvFinder {
                     includingPropertiesForKeys: nil,
                     options: []
                 )
-                let p = contents.filter { $0.lastPathComponent.hasPrefix("pip") }
+                let p = contents.filter {
+                    $0.lastPathComponent.wholeMatch(of: PipFinder.pipRegex) != nil
+                }
                 pips.append(contentsOf: p)
             } catch {
                 print(error)

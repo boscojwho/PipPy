@@ -13,6 +13,8 @@ struct PipFinder {
     private static let local = "usr/local/bin"
     private static let python = "/Library/Frameworks/Python.framework/Versions"
     
+    static let pipRegex = /^pip[\d\.]*/
+    
     static func findGlobal() -> [[URL]] {
         let pythonPaths = py()
         let paths = [usr, local] + pythonPaths
@@ -27,7 +29,7 @@ struct PipFinder {
                 options: []
             )
             let pips = contents.filter {
-                $0.lastPathComponent.hasPrefix("pip")
+                $0.lastPathComponent.wholeMatch(of: Self.pipRegex) != nil
             }
             return pips
         } catch {
