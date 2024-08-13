@@ -15,5 +15,8 @@ struct PyTermApp: App {
             ContentView()
         }
         .modelContainer(for: ProjectBookmark.self)
+        .windowResizability(.contentMinSize)
+        .windowToolbarStyle(.unified(showsTitle: false))
+        .defaultPosition(.center)
     }
 }

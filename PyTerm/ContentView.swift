@@ -53,6 +53,7 @@ struct ContentView: View {
                 .padding()
                 .background()
             }
+            .navigationSplitViewColumnWidth(min: 240, ideal: 280)
         } content: {
             Group {
                 if let selectedPip {
@@ -91,6 +92,7 @@ struct ContentView: View {
                     }
                 }
             }
+            .navigationSplitViewColumnWidth(min: 320, ideal: 360)
         } detail: {
             if let selectedPackage, let selectedPip {
                 PipPackageView(
@@ -99,8 +101,10 @@ struct ContentView: View {
                     package: selectedPackage
                 )
                 .id(selectedPackage)
+                .navigationSplitViewColumnWidth(min: 320, ideal: 480)
             } else {
                 Text("Select a package")
+                    .navigationSplitViewColumnWidth(min: 240, ideal: 320)
             }
         }
         .onChange(of: selectedPip) {
