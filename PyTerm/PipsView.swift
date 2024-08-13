@@ -43,7 +43,7 @@ struct PipsView: View {
             let pips = PipFinder.findGlobal()
             usr = pips[0]
             local = pips[1]
-            python = pips[2..<pips.endIndex].flatMap { $0 }
+            python = Array(Set(pips[2..<pips.endIndex].flatMap { $0 }))
         }
     }
 }
