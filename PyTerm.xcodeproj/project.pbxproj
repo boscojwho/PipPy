@@ -24,6 +24,8 @@
 		E480D0E02C5241EF009C83DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E480D0DF2C5241EF009C83DB /* Assets.xcassets */; };
 		E480D0E32C5241EF009C83DB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E480D0E22C5241EF009C83DB /* Preview Assets.xcassets */; };
 		E480D0EB2C524200009C83DB /* TerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0EA2C524200009C83DB /* TerminalView.swift */; };
+		E4A5AAE52C6AF57D00403B75 /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A5AAE42C6AF57D00403B75 /* SidebarView.swift */; };
+		E4A5AAE72C6AF5A400403B75 /* SidebarFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A5AAE62C6AF5A400403B75 /* SidebarFilter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		E480D0E22C5241EF009C83DB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E480D0E42C5241EF009C83DB /* PyTerm.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PyTerm.entitlements; sourceTree = "<group>"; };
 		E480D0EA2C524200009C83DB /* TerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalView.swift; sourceTree = "<group>"; };
+		E4A5AAE42C6AF57D00403B75 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
+		E4A5AAE62C6AF5A400403B75 /* SidebarFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarFilter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 				E402D9CC2C5DA3590036694D /* ProjectBookmarksView.swift */,
 				E402D9CE2C5DA3B40036694D /* ProjectBookmarkView.swift */,
 				E402D9CA2C5DA30A0036694D /* ProjectBookmark.swift */,
+				E4A5AAE62C6AF5A400403B75 /* SidebarFilter.swift */,
+				E4A5AAE42C6AF57D00403B75 /* SidebarView.swift */,
 				E406C9F72C57095E00D7E241 /* Prototype */,
 				E480D0DF2C5241EF009C83DB /* Assets.xcassets */,
 				E480D0E42C5241EF009C83DB /* PyTerm.entitlements */,
@@ -189,6 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */,
+				E4A5AAE52C6AF57D00403B75 /* SidebarView.swift in Sources */,
 				E406C9FD2C58662900D7E241 /* FindVenv.swift in Sources */,
 				E406C9F92C570B0600D7E241 /* PipClient.swift in Sources */,
 				E402D9CB2C5DA30A0036694D /* ProjectBookmark.swift in Sources */,
@@ -198,6 +205,7 @@
 				E480D0EB2C524200009C83DB /* TerminalView.swift in Sources */,
 				E4053A5C2C564D8E0049E0E1 /* PipCommand.swift in Sources */,
 				E406C9FB2C57101E00D7E241 /* ShellClient.swift in Sources */,
+				E4A5AAE72C6AF5A400403B75 /* SidebarFilter.swift in Sources */,
 				E4053A5E2C564FE60049E0E1 /* PipView.swift in Sources */,
 				E480D0DC2C5241EE009C83DB /* PyTermApp.swift in Sources */,
 				E4053A5A2C5649970049E0E1 /* PipsView.swift in Sources */,
