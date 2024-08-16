@@ -62,18 +62,32 @@ struct ContentView: View {
             }
             .navigationSplitViewColumnWidth(min: 320, ideal: 360)
         } detail: {
-            if let selectedPackage, let selectedPip {
-                PipPackageView(
-                    pipInstallation: selectedPip,
-                    isProjectInstallation: hasVenv(),
-                    package: selectedPackage
-                )
-                .id(selectedPackage)
-                .navigationSplitViewColumnWidth(min: 320, ideal: 480)
-            } else {
-                Text("Select a package")
+            if let selectedPip {
+                if let selectedPackage {
+                    PipPackageView(
+                        pipInstallation: selectedPip,
+                        isProjectInstallation: hasVenv(),
+                        package: selectedPackage
+                    )
+                    .id(selectedPackage)
+                    .navigationSplitViewColumnWidth(min: 320, ideal: 480)
+                } else {
+                    GroupBox {
+                        Text("Select a package")
+                    }
                     .navigationSplitViewColumnWidth(min: 240, ideal: 320)
+                }
+            } else {
+                /// `EmptyView` doesn't work for here some reason.
+                Text("")
+                    .hidden()
+                    .navigationSplitViewColumnWidth(min: 0, ideal: 0, max: 0)
             }
+        }
+        .onChange(of: sidebarFilter) {
+            selectedPip = nil
+            selectedPackage = nil
+            selectedBookmarks = .init()
         }
         .onChange(of: selectedPip) {
             selectedPackage = nil
