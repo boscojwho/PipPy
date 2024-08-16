@@ -17,26 +17,65 @@ struct PipsView: View {
     
     var body: some View {
         List(selection: $selectedInstallation) {
-            Section("System (Global)") {
+            Section {
                 ForEach(usr, id: \.self) { value in
                     NavigationLink(value: value) {
-                        Text(value.lastPathComponent)
+                        LabeledContent {
+                            HStack {
+                                Text(value.lastPathComponent)
+                                    .fontWeight(.medium)
+                                Spacer()
+                            }
+                        } label: {
+                            Image(systemName: "globe")
+                                .fontWeight(.light)
+                        }
+                        .padding(4)
+                        .foregroundStyle(.primary)
                     }
                 }
+            } header: {
+                Text("System (Global)")
             }
-            Section("User (Local)") {
+            Section {
                 ForEach(local, id: \.self) { value in
                     NavigationLink(value: value) {
-                        Text(value.lastPathComponent)
+                        LabeledContent {
+                            HStack {
+                                Text(value.lastPathComponent)
+                                    .fontWeight(.medium)
+                                Spacer()
+                            }
+                        } label: {
+                            Image(systemName: "internaldrive")
+                                .fontWeight(.light)
+                        }
+                        .padding(4)
+                        .foregroundStyle(.primary)
                     }
                 }
+            } header: {
+                Text("User (Local)")
             }
-            Section("Python Installations") {
+            Section {
                 ForEach(python, id: \.self) { value in
                     NavigationLink(value: value) {
-                        Text(value.lastPathComponent)
+                        LabeledContent {
+                            HStack {
+                                Text(value.lastPathComponent)
+                                    .fontWeight(.medium)
+                                Spacer()
+                            }
+                        } label: {
+                            Image(systemName: "gearshape")
+                                .fontWeight(.light)
+                        }
+                        .padding(4)
+                        .foregroundStyle(.primary)
                     }
                 }
+            } header: {
+                Text("Python Installations")
             }
         }
         .onAppear {

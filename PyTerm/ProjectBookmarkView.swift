@@ -12,7 +12,18 @@ struct ProjectBookmarkView: View {
     let bookmark: ProjectBookmark
     var body: some View {
         NavigationLink(value: bookmark) {
-            Text(bookmark.url.lastPathComponent)
+            LabeledContent {
+                HStack {
+                    Text(bookmark.url.lastPathComponent)
+                        .fontWeight(.medium)
+                    Spacer()
+                }
+            } label: {
+                Image(systemName: "chevron.left.slash.chevron.right")
+                    .fontWeight(.light)
+            }
+            .padding(4)
+            .foregroundStyle(.primary)
         }
     }
 }

@@ -27,7 +27,7 @@ struct ProjectBookmarksView: View {
                 )
                 .lineLimit(3)
             } else {
-                Section("Projects") {
+                Section {
                     ForEach(bookmarks) { bookmark in
                         ProjectBookmarkView(bookmark: bookmark)
                     }
@@ -39,6 +39,18 @@ struct ProjectBookmarksView: View {
                             }
                         }
                     }
+                } header: {
+                    LabeledContent {
+                        HStack {
+                            Text("Projects")
+                            Spacer()
+                        }
+                    } label: {
+                        Image(systemName: "folder")
+                            .fontWeight(.light)
+                    }
+                    .padding(4)
+                    .tint(.secondary)
                 }
             }
         }
