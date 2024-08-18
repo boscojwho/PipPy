@@ -60,6 +60,39 @@ struct PipPackage: Codable, Hashable, Identifiable {
     }
 }
 
+@MainActor
+extension PipPackage {
+    @ViewBuilder
+    func makeView(codingKey: CodingKeys) -> some View {
+        Group {
+            let labelText = "\(self[keyPath: codingKey.keyPath])"
+            switch codingKey {
+            case .homepage, .authorEmail:
+                if let string = self[keyPath: codingKey.keyPath] as? String,
+                   let url = URL(string: string) {
+                    Link(labelText, destination: url)
+                } else {
+                    Text(labelText)
+                }
+            case .location:
+                Button {
+                    
+                } label: {
+                    HStack(alignment: .firstTextBaseline) {
+                        Image(systemName: "arrowshape.forward.circle")
+                        Text(labelText)
+                    }
+                }
+                .buttonStyle(.plain)
+
+            default:
+                Text(labelText)
+            }
+        }
+        .multilineTextAlignment(.trailing)
+    }
+}
+
 struct PipPackageView: View {
     let package: PipListResponse
     @State private var pipClient: PipClient
@@ -89,8 +122,7 @@ struct PipPackageView: View {
                         LabeledContent {
                             HStack {
                                 Spacer()
-                                Text("\(packageInfo[keyPath: codingKey.keyPath])")
-                                    .multilineTextAlignment(.trailing)
+                                packageInfo.makeView(codingKey: codingKey)
                             }
                         } label: {
                             Text(codingKey.rawValue)
