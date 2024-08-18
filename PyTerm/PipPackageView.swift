@@ -60,6 +60,54 @@ struct PipPackage: Codable, Hashable, Identifiable {
     }
 }
 
+extension PipPackage {
+    
+    struct Author: Identifiable {
+        let label: String
+        let email: String
+        
+        var id: String { label }
+        
+        static let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+    }
+    
+    var authors: [Author] {
+        do {
+            let authors = try parseAuthorEmails()
+#if DEBUG
+            print(authors)
+#endif
+            return authors
+        } catch {
+            print(error)
+            return []
+        }
+    }
+    
+    private func parseAuthorEmails() throws -> [Author] {
+        try authorEmail.split(separator: ",").map { author in
+            let text = String(author)
+            let regex = try NSRegularExpression(pattern: Author.emailRegex, options: [])
+            let matches = regex.matches(
+                in: text,
+                options: [],
+                range: NSRange(
+                    location: 0,
+                    length: text.utf16.count
+                )
+            )
+            if let match = matches.first {
+                let start = text.index(text.startIndex, offsetBy: match.range.location)
+                let end = text.index(start, offsetBy: match.range.length)
+                let email = text[start..<end]
+                return Author(label: text, email: String(email))
+            } else {
+                return Author(label: text, email: "")
+            }
+        }
+    }
+}
+
 @MainActor
 extension PipPackage {
     @ViewBuilder
@@ -67,16 +115,36 @@ extension PipPackage {
         Group {
             let labelText = "\(self[keyPath: codingKey.keyPath])"
             switch codingKey {
-            case .homepage, .authorEmail:
+            case .homepage:
                 if let string = self[keyPath: codingKey.keyPath] as? String,
                    let url = URL(string: string) {
                     Link(labelText, destination: url)
                 } else {
                     Text(labelText)
                 }
+            case .authorEmail:
+                VStack {
+                    ForEach(authors) { author in
+                        HStack {
+                            Spacer()
+                            Text("\(author.label)")
+                                .foregroundStyle(.link)
+                                .onTapGesture {
+                                    let service = NSSharingService(named: NSSharingService.Name.composeEmail)
+                                    service?.recipients = [author.email]
+                                    service?.subject = "\(name) [\(version)]"
+                                    service?.perform(withItems: [""])
+                                }
+                        }
+                    }
+                }
             case .location:
+                let filePath = URL(filePath: labelText)
+                /// Pip package directories and package names don't necessarily always match (e.g.`charset_normalizer`).
+                /// `Package.location` only returns path to parent directory containing the package.
+//                    .appending(path: self.name)
                 Button {
-                    
+                    NSWorkspace.shared.activateFileViewerSelecting([filePath])
                 } label: {
                     HStack(alignment: .firstTextBaseline) {
                         Image(systemName: "arrowshape.forward.circle")
@@ -84,7 +152,6 @@ extension PipPackage {
                     }
                 }
                 .buttonStyle(.plain)
-
             default:
                 Text(labelText)
             }
