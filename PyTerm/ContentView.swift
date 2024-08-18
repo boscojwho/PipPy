@@ -27,12 +27,16 @@ struct ContentView: View {
         } content: {
             Group {
                 if sidebarFilter == .browse {
-                    PyPIFeedView(feedURL: selectedFeed.url)
-                        .toolbar {
-                            Text(selectedFeed.description)
-                                .font(.title3)
-                                .fontWeight(.medium)
-                        }
+                    PyPIFeedView(
+                        feedURL: selectedFeed.url,
+                        feedType: selectedFeed
+                    )
+                    .toolbar {
+                        Text(selectedFeed.description)
+                            .font(.title3)
+                            .fontWeight(.medium)
+                    }
+                    .navigationSplitViewColumnWidth(min: 320, ideal: 720)
                 } else {
                     if let selectedPip {
                         PipView(
