@@ -9,12 +9,15 @@ import SwiftUI
 
 struct SidebarView: View {
     @Binding var filter: SidebarFilter
+    @Binding var selectedFeed: PyPIFeed
     @Binding var selectedPip: URL?
     @Binding var selectedBookmarks: Set<ProjectBookmark>
     
     var body: some View {
         Group {
             switch filter {
+            case .browse:
+                PyPIView(selectedFeed: $selectedFeed)
             case .system:
                 PipsView(selectedInstallation: $selectedPip)
             case .projects:

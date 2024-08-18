@@ -18,6 +18,9 @@
 		E406C9FB2C57101E00D7E241 /* ShellClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E406C9FA2C57101E00D7E241 /* ShellClient.swift */; };
 		E406C9FD2C58662900D7E241 /* FindVenv.swift in Sources */ = {isa = PBXBuildFile; fileRef = E406C9FC2C58662900D7E241 /* FindVenv.swift */; };
 		E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = E412F9152C5384D300170B92 /* FileSystemAccess.swift */; };
+		E41C6AC92C71BEE4000AED86 /* PyPIFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41C6AC82C71BEE4000AED86 /* PyPIFeedView.swift */; };
+		E41C6ACC2C71C066000AED86 /* FeedKit in Frameworks */ = {isa = PBXBuildFile; productRef = E41C6ACB2C71C066000AED86 /* FeedKit */; };
+		E41C6ACE2C71C1F0000AED86 /* PyPIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41C6ACD2C71C1F0000AED86 /* PyPIView.swift */; };
 		E4559A3B2C57826B001AEB62 /* PipPackageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4559A3A2C57826B001AEB62 /* PipPackageView.swift */; };
 		E480D0DC2C5241EE009C83DB /* PyTermApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DB2C5241EE009C83DB /* PyTermApp.swift */; };
 		E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DD2C5241EE009C83DB /* ContentView.swift */; };
@@ -41,6 +44,8 @@
 		E406C9FC2C58662900D7E241 /* FindVenv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindVenv.swift; sourceTree = "<group>"; };
 		E412F9152C5384D300170B92 /* FileSystemAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemAccess.swift; sourceTree = "<group>"; };
 		E412F9172C5384EB00170B92 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		E41C6AC82C71BEE4000AED86 /* PyPIFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyPIFeedView.swift; sourceTree = "<group>"; };
+		E41C6ACD2C71C1F0000AED86 /* PyPIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyPIView.swift; sourceTree = "<group>"; };
 		E4559A3A2C57826B001AEB62 /* PipPackageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipPackageView.swift; sourceTree = "<group>"; };
 		E480D0D82C5241EE009C83DB /* PipPy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PipPy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E480D0DB2C5241EE009C83DB /* PyTermApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyTermApp.swift; sourceTree = "<group>"; };
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E41C6ACC2C71C066000AED86 /* FeedKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +114,8 @@
 				E402D9CA2C5DA30A0036694D /* ProjectBookmark.swift */,
 				E4A5AAE62C6AF5A400403B75 /* SidebarFilter.swift */,
 				E4A5AAE42C6AF57D00403B75 /* SidebarView.swift */,
+				E41C6ACD2C71C1F0000AED86 /* PyPIView.swift */,
+				E41C6AC82C71BEE4000AED86 /* PyPIFeedView.swift */,
 				E406C9F72C57095E00D7E241 /* Prototype */,
 				E480D0DF2C5241EF009C83DB /* Assets.xcassets */,
 				E480D0E42C5241EF009C83DB /* PyTerm.entitlements */,
@@ -140,6 +148,9 @@
 			dependencies = (
 			);
 			name = PyTerm;
+			packageProductDependencies = (
+				E41C6ACB2C71C066000AED86 /* FeedKit */,
+			);
 			productName = PyTerm;
 			productReference = E480D0D82C5241EE009C83DB /* PipPy.app */;
 			productType = "com.apple.product-type.application";
@@ -168,6 +179,9 @@
 				Base,
 			);
 			mainGroup = E480D0CF2C5241EE009C83DB;
+			packageReferences = (
+				E41C6ACA2C71C066000AED86 /* XCRemoteSwiftPackageReference "FeedKit" */,
+			);
 			productRefGroup = E480D0D92C5241EE009C83DB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -197,6 +211,7 @@
 				E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */,
 				E4A5AAE52C6AF57D00403B75 /* SidebarView.swift in Sources */,
 				E406C9FD2C58662900D7E241 /* FindVenv.swift in Sources */,
+				E41C6ACE2C71C1F0000AED86 /* PyPIView.swift in Sources */,
 				E406C9F92C570B0600D7E241 /* PipClient.swift in Sources */,
 				E402D9CB2C5DA30A0036694D /* ProjectBookmark.swift in Sources */,
 				E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */,
@@ -211,6 +226,7 @@
 				E4053A5A2C5649970049E0E1 /* PipsView.swift in Sources */,
 				E4053A582C56474C0049E0E1 /* FindPipGlobal.swift in Sources */,
 				E402D9CF2C5DA3B40036694D /* ProjectBookmarkView.swift in Sources */,
+				E41C6AC92C71BEE4000AED86 /* PyPIFeedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +433,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E41C6ACA2C71C066000AED86 /* XCRemoteSwiftPackageReference "FeedKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nmdias/FeedKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E41C6ACB2C71C066000AED86 /* FeedKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E41C6ACA2C71C066000AED86 /* XCRemoteSwiftPackageReference "FeedKit" */;
+			productName = FeedKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E480D0D02C5241EE009C83DB /* Project object */;
 }

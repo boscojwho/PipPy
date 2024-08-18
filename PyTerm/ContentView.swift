@@ -10,6 +10,7 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {    
     @State private var sidebarFilter: SidebarFilter = .system
+    @State private var selectedFeed: PyPIFeed = .newestPackages
     @State private var selectedPip: URL?
     @State private var selectedPackage: PipListResponse?
     @State private var selectedBookmarks = Set<ProjectBookmark>()
@@ -19,44 +20,56 @@ struct ContentView: View {
         NavigationSplitView {
             SidebarView(
                 filter: $sidebarFilter,
+                selectedFeed: $selectedFeed,
                 selectedPip: $selectedPip,
                 selectedBookmarks: $selectedBookmarks
             )
         } content: {
             Group {
-                if let selectedPip {
-                    PipView(
-                        pipInstallation: selectedPip,
-                        isProjectInstallation: hasVenv(),
-                        selectedPackage: $selectedPackage
-                    )
-                    .id(selectedPip)
-                    .toolbar {
-                        if hasVenv(), projectPipInstallations.isEmpty == false {
-                            Picker("Pick a Pip Installation", selection: $selectedPip) {
-                                ForEach(projectPipInstallations, id: \.self) { pip in
-                                    Text(pip.lastPathComponent)
-                                        .tag(Optional(pip))
+                if sidebarFilter == .browse {
+                    PyPIFeedView(feedURL: selectedFeed.url)
+                        .toolbar {
+                            Text(selectedFeed.description)
+                                .font(.title3)
+                                .fontWeight(.medium)
+                        }
+                } else {
+                    if let selectedPip {
+                        PipView(
+                            pipInstallation: selectedPip,
+                            isProjectInstallation: hasVenv(),
+                            selectedPackage: $selectedPackage
+                        )
+                        .id(selectedPip)
+                        .toolbar {
+                            if hasVenv(), projectPipInstallations.isEmpty == false {
+                                Picker("Pick a Pip Installation", selection: $selectedPip) {
+                                    ForEach(projectPipInstallations, id: \.self) { pip in
+                                        Text(pip.lastPathComponent)
+                                            .tag(Optional(pip))
+                                    }
                                 }
                             }
                         }
-                    }
-                } else {
-                    switch sidebarFilter {
-                    case .system:
-                        ContentUnavailableView(
-                            "Select an Installation",
-                            systemImage: "folder.badge.gearshape",
-                            description: Text("Select a PIP installation from the sidebar to view its installed packages.")
-                        )
-                        .lineLimit(3)
-                    case .projects:
-                        ContentUnavailableView(
-                            "Select a Project",
-                            systemImage: "folder",
-                            description: Text("Select a project from the sidebar to view its pip installations and installed packages.")
-                        )
-                        .lineLimit(3)
+                    } else {
+                        switch sidebarFilter {
+                        case .system:
+                            ContentUnavailableView(
+                                "Select an Installation",
+                                systemImage: "folder.badge.gearshape",
+                                description: Text("Select a PIP installation from the sidebar to view its installed packages.")
+                            )
+                            .lineLimit(3)
+                        case .projects:
+                            ContentUnavailableView(
+                                "Select a Project",
+                                systemImage: "folder",
+                                description: Text("Select a project from the sidebar to view its pip installations and installed packages.")
+                            )
+                            .lineLimit(3)
+                        case .browse:
+                            EmptyView()
+                        }
                     }
                 }
             }
