@@ -86,10 +86,14 @@ struct PipPackageView: View {
             Section {
                 if let packageInfo {
                     ForEach(PipPackage.CodingKeys.allCases, id: \.self) { codingKey in
-                        HStack {
+                        LabeledContent {
+                            HStack {
+                                Spacer()
+                                Text("\(packageInfo[keyPath: codingKey.keyPath])")
+                                    .multilineTextAlignment(.trailing)
+                            }
+                        } label: {
                             Text(codingKey.rawValue)
-                            Spacer()
-                            Text("\(packageInfo[keyPath: codingKey.keyPath])")
                         }
                     }
                 } else {
