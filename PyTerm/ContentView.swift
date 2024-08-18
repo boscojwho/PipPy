@@ -70,7 +70,7 @@ struct ContentView: View {
                         package: selectedPackage
                     )
                     .id(selectedPackage)
-                    .navigationSplitViewColumnWidth(min: 320, ideal: 480)
+                    .navigationSplitViewColumnWidth(min: 480, ideal: 480)
                 } else {
                     GroupBox {
                         Text("Select a package")

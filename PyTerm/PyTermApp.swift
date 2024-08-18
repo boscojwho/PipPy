@@ -18,5 +18,6 @@ struct PyTermApp: App {
         .windowResizability(.contentMinSize)
         .windowToolbarStyle(.unified(showsTitle: false))
         .defaultPosition(.center)
+        .defaultSize(width: 1080, height: 720)
     }
 }
