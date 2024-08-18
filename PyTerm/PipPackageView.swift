@@ -121,7 +121,7 @@ extension PipPackage {
                         .font(.title2)
                         .multilineTextAlignment(.leading)
                 }
-                .padding(.vertical, 4)
+                .padding(.bottom, 4)
             case .homepage:
                 if let string = self[keyPath: codingKey.keyPath] as? String,
                    let url = URL(string: string) {
