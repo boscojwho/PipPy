@@ -115,6 +115,13 @@ extension PipPackage {
         Group {
             let labelText = "\(self[keyPath: codingKey.keyPath])"
             switch codingKey {
+            case .summary:
+                GroupBox {
+                    Text(labelText)
+                        .font(.title2)
+                        .multilineTextAlignment(.leading)
+                }
+                .padding(.vertical, 4)
             case .homepage:
                 if let string = self[keyPath: codingKey.keyPath] as? String,
                    let url = URL(string: string) {
@@ -186,13 +193,19 @@ struct PipPackageView: View {
             Section {
                 if let packageInfo {
                     ForEach(PipPackage.CodingKeys.allCases, id: \.self) { codingKey in
-                        LabeledContent {
-                            HStack {
-                                Spacer()
-                                packageInfo.makeView(codingKey: codingKey)
+                        if codingKey == .name || codingKey == .version {
+                            EmptyView()
+                        } else if codingKey == .summary {
+                            packageInfo.makeView(codingKey: codingKey)
+                        } else {
+                            LabeledContent {
+                                HStack {
+                                    Spacer()
+                                    packageInfo.makeView(codingKey: codingKey)
+                                }
+                            } label: {
+                                Text(codingKey.rawValue)
                             }
-                        } label: {
-                            Text(codingKey.rawValue)
                         }
                     }
                 } else {
