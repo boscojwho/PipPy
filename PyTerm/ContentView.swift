@@ -26,7 +26,8 @@ struct ContentView: View {
             )
         } content: {
             Group {
-                if sidebarFilter == .browse {
+                switch sidebarFilter {
+                case .browse:
                     PyPIFeedView(
                         feedURL: selectedFeed.url,
                         feedType: selectedFeed
@@ -37,7 +38,7 @@ struct ContentView: View {
                             .fontWeight(.medium)
                     }
                     .navigationSplitViewColumnWidth(min: 320, ideal: 720)
-                } else {
+                case .system, .projects:
                     if let selectedPip {
                         PipView(
                             pipInstallation: selectedPip,
