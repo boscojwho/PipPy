@@ -43,9 +43,9 @@ struct PyPIFeedView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(
-                columns: [GridItem(.adaptive(minimum: 240, maximum: 320))],
+                columns: [GridItem(.adaptive(minimum: 240))],
                 alignment: .center,
-                spacing: 20,
+                spacing: 12,
                 pinnedViews: []
             ) {
                 Group {
@@ -76,7 +76,7 @@ struct PyPIFeedView: View {
                             } label: {
                                 Text("Package")
                             }
-                            .padding(8)
+                            .padding(6)
                             .redacted(reason: .placeholder)
                             .matchedGeometryEffect(
                                 id: offset,
@@ -90,7 +90,7 @@ struct PyPIFeedView: View {
         }
         /// Animation modifier needs to be here. Applying it to Grid or child views causes weird animation artifacts or no animations at all. [2024.08]
         .animation(.default, value: viewModel.feed)
-        .contentMargins(20, for: .scrollContent)
+        .contentMargins(12, for: .scrollContent)
         .task(id: feedURL) {
             self.viewModel.feed = nil
             self.viewModel.feed = await parseFeed()
@@ -100,20 +100,30 @@ struct PyPIFeedView: View {
     private func itemView(_ item: RSSFeedItem, offset: Int) -> some View {
         GroupBox {
             HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 6) {
                     if let description = item.description {
                         Label(description, systemImage: "text.justifyleft")
+                            .lineLimit(nil)
                     }
                     if let link = item.link {
                         Link(destination: URL(string: link)!) {
                             Label(link, systemImage: "link")
+                                .truncationMode(.head)
                         }
                     }
                     if let author = item.author {
                         Label(author, systemImage: "person")
                     }
+                    Spacer()
+                    
                     if let date = item.pubDate?.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)) {
-                        Label(date, systemImage: "calendar")
+                        HStack {
+                            Spacer()
+                            Label(date, systemImage: "calendar")
+                                .foregroundStyle(.secondary)
+                                .font(.caption)
+                                .monospaced()
+                        }
                     }
                 }
                 .font(.body)
@@ -121,12 +131,15 @@ struct PyPIFeedView: View {
                 Spacer()
             }
             .padding(4)
+            .frame(height: 144)
+            .fixedSize(horizontal: false, vertical: true)
         } label: {
             Text(itemTitle(item))
                 .font(.title3)
                 .fontWeight(.bold)
         }
-        .padding(8)
+        .padding(6)
+        .textSelection(.enabled)
     }
     
     private func itemTitle(_ item: RSSFeedItem) -> String {
