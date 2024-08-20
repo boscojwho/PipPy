@@ -39,7 +39,7 @@ struct PyPIView: View {
                     Label("Newest Packages", systemImage: "fireworks")
                 }
                 NavigationLink(value: PyPIFeed.latestUpdates) {
-                    Label("Latest Updates", systemImage: "wand.and.sparkles")
+                    Label("Latest Updates", systemImage: "wand.and.stars")
                 }
             }
         }
