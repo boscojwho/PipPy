@@ -154,7 +154,9 @@ struct ContentView: View {
     
     private func hasVenv() -> Bool {
         guard let selectedPip else { return false }
-        return selectedPip.pathComponents.first { $0 == ".venv" } != nil
+        return VenvFinder(projectUrl: selectedPip)
+            .findVenv()
+            .isEmpty == false
     }
 }
 
