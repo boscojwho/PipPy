@@ -1,7 +1,105 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
 
+    },
+    "%@" : {
+
+    },
+    "^[%lld packages](inflected: true) installed" : {
+
+    },
+    "Access granted" : {
+
+    },
+    "Add Projects Here" : {
+
+    },
+    "Author" : {
+
+    },
+    "Browse" : {
+
+    },
+    "Change directory" : {
+
+    },
+    "Change Directory" : {
+
+    },
+    "Current Directory: %@" : {
+
+    },
+    "Description" : {
+
+    },
+    "Drag and drop Python project directories here." : {
+
+    },
+    "Enter command" : {
+
+    },
+    "Execute" : {
+
+    },
+    "Filter by package name..." : {
+
+    },
+    "Latest Updates" : {
+
+    },
+    "Link" : {
+
+    },
+    "Newest Packages" : {
+
+    },
+    "No access" : {
+
+    },
+    "Package" : {
+
+    },
+    "Pick a Pip Installation" : {
+
+    },
+    "Projects" : {
+
+    },
+    "Published Date" : {
+
+    },
+    "Python Installations" : {
+
+    },
+    "Select a package" : {
+
+    },
+    "Select a PIP installation from the sidebar to view its installed packages." : {
+
+    },
+    "Select a Project" : {
+
+    },
+    "Select a project from the sidebar to view its pip installations and installed packages." : {
+
+    },
+    "Select an Installation" : {
+
+    },
+    "Select Directory" : {
+
+    },
+    "Selected: %@" : {
+
+    },
+    "System (Global)" : {
+
+    },
+    "User (Local)" : {
+
+    }
   },
   "version" : "1.0"
 }
