@@ -31,8 +31,10 @@ struct SidebarView: View {
         .navigationSplitViewColumnWidth(min: 240, ideal: 280)
     }
     
+    @ViewBuilder
     private var sidebarFilterPicker: some View {
-        Picker("", selection: makeBinding_sidebarFilter()) {
+        @Bindable var sidebarPreferences = sidebarPreferences
+        Picker("", selection: $sidebarPreferences.sidebarFilter) {
             ForEach(SidebarFilter.allCases) { filter in
                 Text(filter.description)
                     .tag(filter)
@@ -41,12 +43,5 @@ struct SidebarView: View {
         .pickerStyle(.segmented)
         .padding()
         .background()
-    }
-    
-    private func makeBinding_sidebarFilter() -> Binding<SidebarFilter> {
-        .init(
-            get: { sidebarPreferences.sidebarFilter },
-            set: { sidebarPreferences.sidebarFilter = $0 }
-        )
     }
 }
