@@ -13,46 +13,52 @@ final class SidebarPreferences {
     var sidebarFilter: SidebarFilter = .system
 }
 
+@Observable
+final class ContentSelectionPreferences {
+    var selectedFeed: PyPIFeed = .newestPackages
+    var selectedPip: URL?
+    var selectedPackage: PipListResponse?
+    var selectedBookmarks = Set<ProjectBookmark>()
+}
+
 struct ContentView: View {
     @State private var sidebarPreferences: SidebarPreferences = .init()
-    @State private var selectedFeed: PyPIFeed = .newestPackages
-    @State private var selectedPip: URL?
-    @State private var selectedPackage: PipListResponse?
-    @State private var selectedBookmarks = Set<ProjectBookmark>()
+    @State private var contentSelectionPreferences: ContentSelectionPreferences = .init()
     @State private var projectPipInstallations: [URL] = []
     
     var body: some View {
+        @Bindable var contentSelection = contentSelectionPreferences
         NavigationSplitView {
             SidebarView(
-                selectedFeed: $selectedFeed,
-                selectedPip: $selectedPip,
-                selectedBookmarks: $selectedBookmarks
+                selectedFeed: $contentSelection.selectedFeed,
+                selectedPip: $contentSelection.selectedPip,
+                selectedBookmarks: $contentSelection.selectedBookmarks
             )
         } content: {
             Group {
                 switch sidebarPreferences.sidebarFilter {
                 case .browse:
                     PyPIFeedView(
-                        feedURL: selectedFeed.url,
-                        feedType: selectedFeed
+                        feedURL: contentSelectionPreferences.selectedFeed.url,
+                        feedType: contentSelectionPreferences.selectedFeed
                     )
                     .toolbar {
-                        Text(selectedFeed.description)
+                        Text(contentSelectionPreferences.selectedFeed.description)
                             .font(.title3)
                             .fontWeight(.medium)
                     }
                     .navigationSplitViewColumnWidth(min: 320, ideal: 720)
                 case .system, .projects:
-                    if let selectedPip {
+                    if let selectedPip = contentSelectionPreferences.selectedPip {
                         PipView(
                             pipInstallation: selectedPip,
                             isProjectInstallation: hasVenv(),
-                            selectedPackage: $selectedPackage
+                            selectedPackage: $contentSelection.selectedPackage
                         )
                         .id(selectedPip)
                         .toolbar {
                             if hasVenv(), projectPipInstallations.isEmpty == false {
-                                Picker("Pick a Pip Installation", selection: $selectedPip) {
+                                Picker("Pick a Pip Installation", selection: $contentSelection.selectedPip) {
                                     ForEach(projectPipInstallations, id: \.self) { pip in
                                         Text(pip.lastPathComponent)
                                             .tag(Optional(pip))
@@ -84,8 +90,8 @@ struct ContentView: View {
             }
             .navigationSplitViewColumnWidth(min: 320, ideal: 360)
         } detail: {
-            if let selectedPip {
-                if let selectedPackage {
+            if let selectedPip = contentSelectionPreferences.selectedPip {
+                if let selectedPackage = contentSelectionPreferences.selectedPackage {
                     PipPackageView(
                         pipInstallation: selectedPip,
                         isProjectInstallation: hasVenv(),
@@ -108,19 +114,19 @@ struct ContentView: View {
         }
         .environment(sidebarPreferences)
         .onChange(of: sidebarPreferences.sidebarFilter) {
-            selectedPip = nil
-            selectedPackage = nil
-            selectedBookmarks = .init()
+            contentSelectionPreferences.selectedPip = nil
+            contentSelectionPreferences.selectedPackage = nil
+            contentSelectionPreferences.selectedBookmarks = .init()
         }
-        .onChange(of: selectedPip) {
-            selectedPackage = nil
+        .onChange(of: contentSelectionPreferences.selectedPip) {
+            contentSelectionPreferences.selectedPackage = nil
         }
-        .onChange(of: selectedBookmarks.first) { _, newValue in
+        .onChange(of: contentSelectionPreferences.selectedBookmarks.first) { _, newValue in
             if let bookmark = newValue {
                 let venvFinder = VenvFinder(projectUrl: bookmark.url)
                 let pipInstallations = venvFinder.findPipInstallations(assumesVenvName: false)
                 self.projectPipInstallations = pipInstallations
-                self.selectedPip = pipInstallations.first
+                self.contentSelectionPreferences.selectedPip = pipInstallations.first
             }
         }
         .onDrop(of: [.url], isTargeted: nil) { providers in
@@ -142,7 +148,7 @@ struct ContentView: View {
 //                                    shellClient.executeCommand("which pip")
                                 } else {
                                     self.projectPipInstallations = pipInstallations
-                                    self.selectedPip = pipInstallations.first
+                                    self.contentSelectionPreferences.selectedPip = pipInstallations.first
                                 }
                             }
                         } else {
@@ -158,7 +164,7 @@ struct ContentView: View {
     }
     
     private func hasVenv() -> Bool {
-        guard let selectedPip else { return false }
+        guard let selectedPip = contentSelectionPreferences.selectedPip else { return false }
         return VenvFinder(projectUrl: selectedPip)
             .findVenv()
             .isEmpty == false
