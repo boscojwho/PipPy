@@ -8,8 +8,13 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-struct ContentView: View {    
-    @State private var sidebarFilter: SidebarFilter = .system
+@Observable
+final class SidebarPreferences {
+    var sidebarFilter: SidebarFilter = .system
+}
+
+struct ContentView: View {
+    @State private var sidebarPreferences: SidebarPreferences = .init()
     @State private var selectedFeed: PyPIFeed = .newestPackages
     @State private var selectedPip: URL?
     @State private var selectedPackage: PipListResponse?
@@ -19,14 +24,13 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             SidebarView(
-                filter: $sidebarFilter,
                 selectedFeed: $selectedFeed,
                 selectedPip: $selectedPip,
                 selectedBookmarks: $selectedBookmarks
             )
         } content: {
             Group {
-                switch sidebarFilter {
+                switch sidebarPreferences.sidebarFilter {
                 case .browse:
                     PyPIFeedView(
                         feedURL: selectedFeed.url,
@@ -57,7 +61,7 @@ struct ContentView: View {
                             }
                         }
                     } else {
-                        switch sidebarFilter {
+                        switch sidebarPreferences.sidebarFilter {
                         case .system:
                             ContentUnavailableView(
                                 "Select an Installation",
@@ -102,7 +106,8 @@ struct ContentView: View {
                     .navigationSplitViewColumnWidth(min: 0, ideal: 0, max: 0)
             }
         }
-        .onChange(of: sidebarFilter) {
+        .environment(sidebarPreferences)
+        .onChange(of: sidebarPreferences.sidebarFilter) {
             selectedPip = nil
             selectedPackage = nil
             selectedBookmarks = .init()

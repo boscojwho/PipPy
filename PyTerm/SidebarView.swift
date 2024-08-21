@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @Binding var filter: SidebarFilter
+    @Environment(SidebarPreferences.self) private var sidebarPreferences
     @Binding var selectedFeed: PyPIFeed
     @Binding var selectedPip: URL?
     @Binding var selectedBookmarks: Set<ProjectBookmark>
     
     var body: some View {
         Group {
-            switch filter {
+            switch sidebarPreferences.sidebarFilter {
             case .browse:
                 PyPIView(selectedFeed: $selectedFeed)
             case .system:
@@ -32,7 +32,7 @@ struct SidebarView: View {
     }
     
     private var sidebarFilterPicker: some View {
-        Picker("", selection: $filter) {
+        Picker("", selection: makeBinding_sidebarFilter()) {
             ForEach(SidebarFilter.allCases) { filter in
                 Text(filter.description)
                     .tag(filter)
@@ -41,5 +41,12 @@ struct SidebarView: View {
         .pickerStyle(.segmented)
         .padding()
         .background()
+    }
+    
+    private func makeBinding_sidebarFilter() -> Binding<SidebarFilter> {
+        .init(
+            get: { sidebarPreferences.sidebarFilter },
+            set: { sidebarPreferences.sidebarFilter = $0 }
+        )
     }
 }
