@@ -60,15 +60,20 @@ struct PyPIFeedView: View {
             ) {
                 Group {
                     if let items = viewModel.feed?.items {
-                        ForEach(Array(items.enumerated()), id: \.element.hashValue) {
-                            offset,
-                            item in
-                            itemView(item, offset: offset)
-                                .matchedGeometryEffect(
-                                    id: offset,
-                                    in: feedNamespace,
-                                    properties: .position
+                        if items.isEmpty {
+                            GroupBox {
+                                ContentUnavailableView(
+                                    "Saved Packages",
+                                    systemImage: "star",
+                                    description: Text("Packages saved in Newest/Latest appear here.")
                                 )
+                            }
+                        } else {
+                            ForEach(Array(items.enumerated()), id: \.element.hashValue) {
+                                offset,
+                                item in
+                                itemView(item, offset: offset)
+                            }
                         }
                     } else {
                         ForEach(0..<30) { offset in
@@ -88,11 +93,6 @@ struct PyPIFeedView: View {
                             }
                             .padding(6)
                             .redacted(reason: .placeholder)
-                            .matchedGeometryEffect(
-                                id: offset,
-                                in: feedNamespace,
-                                properties: .position
-                            )
                         }
                     }
                 }
@@ -186,6 +186,12 @@ struct PyPIFeedView: View {
                 .fontWeight(.bold)
         }
         .padding(6)
+        .transition(
+            .asymmetric(
+                insertion: .push(from: .top).combined(with: .opacity),
+                removal: .scale.combined(with: .opacity)
+            )
+        )
         .textSelection(.enabled)
         .alert(
             "Are you sure?",
@@ -230,14 +236,14 @@ struct PyPIFeedView: View {
     
     private func itemTitle(_ item: RSSFeedItem) -> String {
         switch feedType {
-        case .newestPackages:
+        case .newestPackages, .savedPackages:
             if let title = item.title {
                 let packageName = title.split(separator: " ", maxSplits: 1).first
                 return String(packageName ?? "")
             } else {
                 return ""
             }
-        case .latestUpdates, .savedPackages:
+        case .latestUpdates:
             return item.title ?? ""
         }
     }
