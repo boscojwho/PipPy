@@ -10,7 +10,8 @@ import SwiftData
 
 @Model
 final class PyPIFeedItem {
-    let title: String?
+    @Attribute(.unique)
+    let title: String
     @Attribute(originalName: "description")
     let desc: String?
     let author: String?
@@ -26,7 +27,7 @@ final class PyPIFeedItem {
         guid: String?,
         pubDate: Date?
     ) {
-        self.title = title
+        self.title = title ?? ""
         self.desc = desc
         self.author = author
         self.link = link

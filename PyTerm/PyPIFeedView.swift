@@ -35,6 +35,7 @@ struct PyPIFeedView: View {
     
     @State private var viewModel: PyPIFeedViewModel
     @Query var savedItems: [PyPIFeedItem]
+    @State private var confirmUnsave = false
     
     init(
         feedURL: URL,
@@ -111,6 +112,17 @@ struct PyPIFeedView: View {
             self.viewModel.feed = nil
             self.viewModel.feed = await parseFeed()
         }
+        /// We need to monitor `@Query var savedItems` to trigger view updates because we don't use it directly in the view body.
+        .onChange(of: savedItems.count, initial: true) {
+            guard feedType == .savedPackages else {
+                return
+            }
+            self.viewModel.feed = {
+                let feed = RSSFeed()
+                feed.items = savedItems.map { $0.rssFeedItem() }
+                return feed
+            }()
+        }
     }
 
     private func itemView(_ item: RSSFeedItem, offset: Int) -> some View {
@@ -134,22 +146,43 @@ struct PyPIFeedView: View {
                     
                     if let date = item.pubDate?.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)) {
                         HStack {
-                            Button("", systemImage: "star") {
-                                let item = PyPIFeedItem(item)
-                                viewContext.insert(item)
-                                if viewContext.hasChanges {
-                                    do {
-                                        try viewContext.save()
-                                    } catch {
-                                        print(error)
+                            let saved = isSaved(item)
+                            Button("", systemImage: saved ? "star.fill" : "star") {
+                                if saved {
+                                    confirmUnsave = true
+                                } else {
+                                    let item = PyPIFeedItem(item)
+                                    viewContext.insert(item)
+                                    if viewContext.hasChanges {
+                                        do {
+                                            try viewContext.save()
+                                        } catch {
+                                            print(error)
+                                        }
                                     }
                                 }
                             }
+                            .animation(.default, value: isSaved(item))
                             Spacer()
                             Label(date, systemImage: "calendar")
                                 .foregroundStyle(.secondary)
                                 .font(.caption)
                                 .monospaced()
+                        }
+                        .alert("Are you sure?", isPresented: $confirmUnsave) {
+                            Button("Remove", systemImage: "star.slash", role: .destructive) {
+                                do {
+                                    let matches = try viewContext.fetch(feedItemFetchDescriptor(item))
+                                    for match in matches {
+                                        viewContext.delete(match)
+                                    }
+                                    if viewContext.hasChanges {
+                                        try viewContext.save()
+                                    }
+                                } catch {
+                                    print(error)
+                                }
+                            }
                         }
                     }
                 }
@@ -167,6 +200,25 @@ struct PyPIFeedView: View {
         }
         .padding(6)
         .textSelection(.enabled)
+    }
+    
+    private func feedItemFetchDescriptor(_ item: RSSFeedItem) -> FetchDescriptor<PyPIFeedItem> {
+        /// Can't directly capture `item` inside predicate, otherwise Swift macro error.
+        let rhs = String(item.title?.split(separator: " ", maxSplits: 1).first ?? "")
+        let descriptor = FetchDescriptor<PyPIFeedItem>(
+            predicate: #Predicate { $0.title == rhs }
+        )
+        return descriptor
+    }
+    
+    private func isSaved(_ item: RSSFeedItem) -> Bool {
+        let descriptor = feedItemFetchDescriptor(item)
+        do {
+            let count = try viewContext.fetchCount(descriptor)
+            return count != 0
+        } catch {
+            return false
+        }
     }
     
     private func itemTitle(_ item: RSSFeedItem) -> String {
