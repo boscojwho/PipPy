@@ -382,7 +382,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bosco.ho.PyTerm;
 				PRODUCT_NAME = PipPy;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -413,7 +413,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = 0.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bosco.ho.PyTerm;
 				PRODUCT_NAME = PipPy;
 				SWIFT_EMIT_LOC_STRINGS = YES;
