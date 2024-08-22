@@ -28,6 +28,9 @@
     "Change Directory" : {
 
     },
+    "Collections" : {
+
+    },
     "Current Directory: %@" : {
 
     },
@@ -71,6 +74,9 @@
 
     },
     "Python Installations" : {
+
+    },
+    "Saved Packages" : {
 
     },
     "Select a package" : {

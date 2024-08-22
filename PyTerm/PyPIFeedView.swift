@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 import FeedKit
 
 extension RSSFeedItem: Identifiable, Hashable {
@@ -22,20 +23,26 @@ extension RSSFeedItem: Identifiable, Hashable {
 @Observable
 final class PyPIFeedViewModel {
     var feed: RSSFeed?
+    init(feed: RSSFeed? = nil) {
+        self.feed = feed
+    }
 }
 
 struct PyPIFeedView: View {
-    
+    @Environment(\.modelContext) private var viewContext
     let feedURL: URL
     let feedType: PyPIFeed
     
     @State private var viewModel: PyPIFeedViewModel
+    @Query var savedItems: [PyPIFeedItem]
     
-    init(feedURL: URL, feedType: PyPIFeed) {
-        /// BUG: Whenever parameters change, SwiftUI evaluates grid's content closure first, then runs the .task(id:) modifier, causing the view to render incorrect content between animations. [2024.08]
-        _viewModel = .init(wrappedValue: .init())
+    init(
+        feedURL: URL,
+        feedType: PyPIFeed
+    ) {
         self.feedURL = feedURL
         self.feedType = feedType
+        _viewModel = .init(wrappedValue: .init())
     }
     
     @Namespace private var feedNamespace
@@ -92,6 +99,15 @@ struct PyPIFeedView: View {
         .animation(.default, value: viewModel.feed)
         .contentMargins(12, for: .scrollContent)
         .task(id: feedURL) {
+            /// Use SwiftData query for `.savedPackages`.
+            guard feedType != .savedPackages else {
+                self.viewModel.feed = {
+                    let feed = RSSFeed()
+                    feed.items = savedItems.map { $0.rssFeedItem() }
+                    return feed
+                }()
+                return
+            }
             self.viewModel.feed = nil
             self.viewModel.feed = await parseFeed()
         }
@@ -118,6 +134,17 @@ struct PyPIFeedView: View {
                     
                     if let date = item.pubDate?.formatted(.relative(presentation: .numeric, unitsStyle: .abbreviated)) {
                         HStack {
+                            Button("", systemImage: "star") {
+                                let item = PyPIFeedItem(item)
+                                viewContext.insert(item)
+                                if viewContext.hasChanges {
+                                    do {
+                                        try viewContext.save()
+                                    } catch {
+                                        print(error)
+                                    }
+                                }
+                            }
                             Spacer()
                             Label(date, systemImage: "calendar")
                                 .foregroundStyle(.secondary)
@@ -151,7 +178,7 @@ struct PyPIFeedView: View {
             } else {
                 return ""
             }
-        case .latestUpdates:
+        case .latestUpdates, .savedPackages:
             return item.title ?? ""
         }
     }

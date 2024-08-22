@@ -10,6 +10,7 @@ import SwiftUI
 enum PyPIFeed: Int, Identifiable, CustomStringConvertible {
     case newestPackages
     case latestUpdates
+    case savedPackages
     
     var id: Int { rawValue }
     var description: String {
@@ -18,6 +19,8 @@ enum PyPIFeed: Int, Identifiable, CustomStringConvertible {
             "Newest Packages"
         case .latestUpdates:
             "Latest Updates"
+        case .savedPackages:
+            "Saved Packages"
         }
     }
     var url: URL {
@@ -26,6 +29,8 @@ enum PyPIFeed: Int, Identifiable, CustomStringConvertible {
             URL(string: "https://pypi.org/rss/packages.xml")!
         case .latestUpdates:
             URL(string: "https://pypi.org/rss/updates.xml")!
+        case .savedPackages:
+            URL(fileURLWithPath: "")
         }
     }
 }
@@ -40,6 +45,11 @@ struct PyPIView: View {
                 }
                 NavigationLink(value: PyPIFeed.latestUpdates) {
                     Label("Latest Updates", systemImage: "wand.and.stars")
+                }
+            }
+            Section("Collections") {
+                NavigationLink(value: PyPIFeed.savedPackages) {
+                    Label("Saved Packages", systemImage: "star")
                 }
             }
         }

@@ -27,15 +27,11 @@ struct ContentView: View {
     @State private var projectPipInstallations: [URL] = []
     
     var body: some View {
-        @Bindable var contentSelection = contentSelectionPreferences
         NavigationSplitView {
-            SidebarView(
-                selectedFeed: $contentSelection.selectedFeed,
-                selectedPip: $contentSelection.selectedPip,
-                selectedBookmarks: $contentSelection.selectedBookmarks
-            )
+            SidebarView()
         } content: {
             Group {
+                @Bindable var contentSelection = contentSelectionPreferences
                 switch sidebarPreferences.sidebarFilter {
                 case .browse:
                     PyPIFeedView(
@@ -113,6 +109,7 @@ struct ContentView: View {
             }
         }
         .environment(sidebarPreferences)
+        .environment(contentSelectionPreferences)
         .onChange(of: sidebarPreferences.sidebarFilter) {
             contentSelectionPreferences.selectedPip = nil
             contentSelectionPreferences.selectedPackage = nil

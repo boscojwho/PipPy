@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E402A4FE2C7718070032AC72 /* PyPIFeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E402A4FD2C7718070032AC72 /* PyPIFeedItem.swift */; };
+		E402A5002C771C0F0032AC72 /* PyPISavedItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E402A4FF2C771C0F0032AC72 /* PyPISavedItemsView.swift */; };
 		E402D9CB2C5DA30A0036694D /* ProjectBookmark.swift in Sources */ = {isa = PBXBuildFile; fileRef = E402D9CA2C5DA30A0036694D /* ProjectBookmark.swift */; };
 		E402D9CD2C5DA3590036694D /* ProjectBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E402D9CC2C5DA3590036694D /* ProjectBookmarksView.swift */; };
 		E402D9CF2C5DA3B40036694D /* ProjectBookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E402D9CE2C5DA3B40036694D /* ProjectBookmarkView.swift */; };
@@ -33,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E402A4FD2C7718070032AC72 /* PyPIFeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyPIFeedItem.swift; sourceTree = "<group>"; };
+		E402A4FF2C771C0F0032AC72 /* PyPISavedItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyPISavedItemsView.swift; sourceTree = "<group>"; };
 		E402D9CA2C5DA30A0036694D /* ProjectBookmark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectBookmark.swift; sourceTree = "<group>"; };
 		E402D9CC2C5DA3590036694D /* ProjectBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectBookmarksView.swift; sourceTree = "<group>"; };
 		E402D9CE2C5DA3B40036694D /* ProjectBookmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectBookmarkView.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 				E4A5AAE42C6AF57D00403B75 /* SidebarView.swift */,
 				E41C6ACD2C71C1F0000AED86 /* PyPIView.swift */,
 				E41C6AC82C71BEE4000AED86 /* PyPIFeedView.swift */,
+				E402A4FD2C7718070032AC72 /* PyPIFeedItem.swift */,
+				E402A4FF2C771C0F0032AC72 /* PyPISavedItemsView.swift */,
 				E406C9F72C57095E00D7E241 /* Prototype */,
 				E480D0DF2C5241EF009C83DB /* Assets.xcassets */,
 				E480D0E42C5241EF009C83DB /* PyTerm.entitlements */,
@@ -221,6 +227,7 @@
 				E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */,
 				E4559A3B2C57826B001AEB62 /* PipPackageView.swift in Sources */,
 				E402D9CD2C5DA3590036694D /* ProjectBookmarksView.swift in Sources */,
+				E402A5002C771C0F0032AC72 /* PyPISavedItemsView.swift in Sources */,
 				E480D0EB2C524200009C83DB /* TerminalView.swift in Sources */,
 				E4053A5C2C564D8E0049E0E1 /* PipCommand.swift in Sources */,
 				E406C9FB2C57101E00D7E241 /* ShellClient.swift in Sources */,
@@ -230,6 +237,7 @@
 				E4053A5A2C5649970049E0E1 /* PipsView.swift in Sources */,
 				E4053A582C56474C0049E0E1 /* FindPipGlobal.swift in Sources */,
 				E402D9CF2C5DA3B40036694D /* ProjectBookmarkView.swift in Sources */,
+				E402A4FE2C7718070032AC72 /* PyPIFeedItem.swift in Sources */,
 				E41C6AC92C71BEE4000AED86 /* PyPIFeedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,19 +9,18 @@ import SwiftUI
 
 struct SidebarView: View {
     @Environment(SidebarPreferences.self) private var sidebarPreferences
-    @Binding var selectedFeed: PyPIFeed
-    @Binding var selectedPip: URL?
-    @Binding var selectedBookmarks: Set<ProjectBookmark>
+    @Environment(ContentSelectionPreferences.self) private var contentSelectionPreferences
     
     var body: some View {
         Group {
+            @Bindable var prefs = contentSelectionPreferences
             switch sidebarPreferences.sidebarFilter {
             case .browse:
-                PyPIView(selectedFeed: $selectedFeed)
+                PyPIView(selectedFeed: $prefs.selectedFeed)
             case .system:
-                PipsView(selectedInstallation: $selectedPip)
+                PipsView(selectedInstallation: $prefs.selectedPip)
             case .projects:
-                ProjectBookmarksView(selectedBookmarks: $selectedBookmarks)
+                ProjectBookmarksView(selectedBookmarks: $prefs.selectedBookmarks)
             }
         }
         .listStyle(.sidebar)
