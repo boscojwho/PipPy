@@ -27,7 +27,8 @@ final class PyPIFeedItem {
         guid: String?,
         pubDate: Date?
     ) {
-        self.title = title ?? ""
+        assert(title != nil, "PyPI packages must have a title (name).")
+        self.title = title!
         self.desc = desc
         self.author = author
         self.link = link
@@ -39,11 +40,9 @@ final class PyPIFeedItem {
 import FeedKit
 extension PyPIFeedItem {
     convenience init(_ item: RSSFeedItem) {
+        assert(item.title != nil, "PyPI packages must have a title (name).")
         self.init(
-            title: String(
-                item.title?.split(separator: " ", maxSplits: 1).first
-                ?? ""
-            ),
+            title: item.title,
             desc: item.description,
             author: item.author,
             link: item.link,

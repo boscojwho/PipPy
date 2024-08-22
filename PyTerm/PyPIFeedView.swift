@@ -35,7 +35,9 @@ struct PyPIFeedView: View {
     
     @State private var viewModel: PyPIFeedViewModel
     @Query var savedItems: [PyPIFeedItem]
+    
     @State private var confirmUnsave = false
+    @State private var unsaveItem: RSSFeedItem?
     
     init(
         feedURL: URL,
@@ -150,6 +152,7 @@ struct PyPIFeedView: View {
                             Button("", systemImage: saved ? "star.fill" : "star") {
                                 if saved {
                                     confirmUnsave = true
+                                    unsaveItem = item
                                 } else {
                                     let item = PyPIFeedItem(item)
                                     viewContext.insert(item)
@@ -162,27 +165,11 @@ struct PyPIFeedView: View {
                                     }
                                 }
                             }
-                            .animation(.default, value: isSaved(item))
                             Spacer()
                             Label(date, systemImage: "calendar")
                                 .foregroundStyle(.secondary)
                                 .font(.caption)
                                 .monospaced()
-                        }
-                        .alert("Are you sure?", isPresented: $confirmUnsave) {
-                            Button("Remove", systemImage: "star.slash", role: .destructive) {
-                                do {
-                                    let matches = try viewContext.fetch(feedItemFetchDescriptor(item))
-                                    for match in matches {
-                                        viewContext.delete(match)
-                                    }
-                                    if viewContext.hasChanges {
-                                        try viewContext.save()
-                                    }
-                                } catch {
-                                    print(error)
-                                }
-                            }
                         }
                     }
                 }
@@ -200,11 +187,31 @@ struct PyPIFeedView: View {
         }
         .padding(6)
         .textSelection(.enabled)
+        .alert(
+            "Are you sure?",
+            isPresented: $confirmUnsave,
+            presenting: unsaveItem
+        ) { item in
+            Button("Remove", systemImage: "star.slash", role: .destructive) {
+                do {
+                    let matches = try viewContext.fetch(feedItemFetchDescriptor(item))
+                    for match in matches {
+                        viewContext.delete(match)
+                    }
+                    if viewContext.hasChanges {
+                        try viewContext.save()
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
     
     private func feedItemFetchDescriptor(_ item: RSSFeedItem) -> FetchDescriptor<PyPIFeedItem> {
         /// Can't directly capture `item` inside predicate, otherwise Swift macro error.
-        let rhs = String(item.title?.split(separator: " ", maxSplits: 1).first ?? "")
+//        let rhs = String(item.title?.split(separator: " ", maxSplits: 1).first ?? "")
+        let rhs = item.title ?? ""
         let descriptor = FetchDescriptor<PyPIFeedItem>(
             predicate: #Predicate { $0.title == rhs }
         )
