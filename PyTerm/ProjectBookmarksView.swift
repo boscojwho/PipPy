@@ -55,38 +55,69 @@ struct ProjectBookmarksView: View {
             }
         }
         .onDrop(of: [.url], isTargeted: nil) { providers in
-            for item in providers {
-                if item.canLoadObject(ofClass: URL.self) {
-                    let _ = item.loadObject(ofClass: URL.self) { url, error in
-                        if let url {
-                            do {
-                                try addBookmark(url: url)
-                            } catch {
-                                print(error)
-                            }
-                        } else {
-                            if let error {
-                                print(error)
-                            }
+            Task {
+                let urls = try await withThrowingTaskGroup(of: URL.self, returning: [URL].self) { taskGroup in
+                    for item in providers {
+                        taskGroup.addTask {
+                            try await loadURL(item)
                         }
                     }
+                    
+                    var urls: [URL] = []
+                    for try await url in taskGroup {
+                        urls.append(url)
+                    }
+                    return urls
                 }
+               
+                for url in urls {
+                    do {
+                        try await addBookmark(url: url)
+                    } catch {
+                        print(error)
+                    }
+                }
+                
+                try await saveContext()
             }
-            do {
-                try modelContext.save()
-            } catch {
-                print(error)
-            }
+            
             return true
         }
     }
     
-    private func addBookmark(url: URL) throws {
+    
+    nonisolated private func loadURL(_ item: NSItemProvider) async throws -> URL {
+        guard item.canLoadObject(ofClass: URL.self) else {
+            throw NSError(domain: "", code: 0)
+        }
+        return try await withCheckedThrowingContinuation { continuation in
+            let _ = item.loadObject(ofClass: URL.self) { url, error in
+                if let url {
+                    continuation.resume(returning: url)
+                } else {
+                    if let error {
+                        print(error)
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(throwing: NSError(domain: "", code: 0))
+                    }
+                }
+            }
+        }
+    }
+    
+    @MainActor
+    private func addBookmark(url: URL) async throws {
         guard url.hasDirectoryPath else {
             throw URLError(.unsupportedURL)
         }
         let bookmark = ProjectBookmark(url: url)
         modelContext.insert(bookmark)
+    }
+    
+    @MainActor
+    private func saveContext() async throws {
+        try modelContext.save()
     }
 }
 
