@@ -9,6 +9,17 @@ import SwiftUI
 import SwiftData
 import Sparkle
 
+private struct AutoUpdateEnvironmentKey : EnvironmentKey {
+    static let defaultValue: SPUStandardUpdaterController? = nil
+}
+
+extension EnvironmentValues {
+    var autoUpdater: SPUStandardUpdaterController? {
+        get { self[AutoUpdateEnvironmentKey.self] }
+        set { self[AutoUpdateEnvironmentKey.self] = newValue }
+    }
+}
+
 @main
 struct PyTermApp: App {
     private let updaterController: SPUStandardUpdaterController
@@ -35,5 +46,14 @@ struct PyTermApp: App {
                 AutoUpdaterView(updater: updaterController.updater)
             }
         }
+        
+        Settings {
+            SettingsView()
+                .frame(minWidth: 420, minHeight: 180)
+        }
+        .environment(\.autoUpdater, updaterController)
+        .windowResizability(.contentMinSize)
+        .defaultPosition(.topTrailing)
+        .defaultSize(width: 420, height: 180)
     }
 }

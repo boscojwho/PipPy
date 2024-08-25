@@ -26,6 +26,7 @@
 		E44314A62C7BC1740084DFD4 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E44314A52C7BC1740084DFD4 /* Sparkle */; };
 		E44314A82C7BC2FF0084DFD4 /* AutoUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44314A72C7BC2FF0084DFD4 /* AutoUpdater.swift */; };
 		E44314AA2C7BC3B10084DFD4 /* AutoUpdaterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44314A92C7BC3B10084DFD4 /* AutoUpdaterView.swift */; };
+		E44314AC2C7BC48B0084DFD4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44314AB2C7BC48B0084DFD4 /* SettingsView.swift */; };
 		E4559A3B2C57826B001AEB62 /* PipPackageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4559A3A2C57826B001AEB62 /* PipPackageView.swift */; };
 		E480D0DC2C5241EE009C83DB /* PyTermApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DB2C5241EE009C83DB /* PyTermApp.swift */; };
 		E480D0DE2C5241EE009C83DB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E480D0DD2C5241EE009C83DB /* ContentView.swift */; };
@@ -55,6 +56,7 @@
 		E443146A2C757E8F0084DFD4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		E44314A72C7BC2FF0084DFD4 /* AutoUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoUpdater.swift; sourceTree = "<group>"; };
 		E44314A92C7BC3B10084DFD4 /* AutoUpdaterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoUpdaterView.swift; sourceTree = "<group>"; };
+		E44314AB2C7BC48B0084DFD4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E4559A3A2C57826B001AEB62 /* PipPackageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipPackageView.swift; sourceTree = "<group>"; };
 		E480D0D82C5241EE009C83DB /* PipPy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PipPy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E480D0DB2C5241EE009C83DB /* PyTermApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyTermApp.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				E402A4FD2C7718070032AC72 /* PyPIFeedItem.swift */,
 				E44314A72C7BC2FF0084DFD4 /* AutoUpdater.swift */,
 				E44314A92C7BC3B10084DFD4 /* AutoUpdaterView.swift */,
+				E44314AB2C7BC48B0084DFD4 /* SettingsView.swift */,
 				E406C9F72C57095E00D7E241 /* Prototype */,
 				E480D0DF2C5241EF009C83DB /* Assets.xcassets */,
 				E480D0E42C5241EF009C83DB /* PyTerm.entitlements */,
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E412F9162C5384D300170B92 /* FileSystemAccess.swift in Sources */,
+				E44314AC2C7BC48B0084DFD4 /* SettingsView.swift in Sources */,
 				E4A5AAE52C6AF57D00403B75 /* SidebarView.swift in Sources */,
 				E406C9FD2C58662900D7E241 /* FindVenv.swift in Sources */,
 				E41C6ACE2C71C1F0000AED86 /* PyPIView.swift in Sources */,
