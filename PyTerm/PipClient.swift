@@ -30,17 +30,14 @@ extension PipListResponse {
 @Observable
 final class PipClient {
     let installationPath: URL
-    let isProjectInstallation: Bool
     let pipExecutable: String?
     private var shellClient: ShellClient
     init(
         installationPath: URL,
-        isProjectInstallation: Bool,
         pipExecutable: String?,
         shellClient: ShellClient
     ) {
         self.installationPath = installationPath
-        self.isProjectInstallation = isProjectInstallation
         self.pipExecutable = pipExecutable
         self.shellClient = shellClient
     }

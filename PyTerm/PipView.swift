@@ -13,14 +13,12 @@ struct PipView: View {
     @Binding var selectedPackage: PipListResponse?
     init(
         pipInstallation: URL,
-        isProjectInstallation: Bool,
         selectedPackage: Binding<PipListResponse?>
     ) {
         self.pipInstallation = pipInstallation
         _pipClient = .init(
             wrappedValue: .init(
                 installationPath: pipInstallation,
-                isProjectInstallation: isProjectInstallation,
                 pipExecutable: pipInstallation.lastPathComponent,
                 shellClient: .init(currentDirectoryPath: pipInstallation.deletingLastPathComponent().path())
             )
@@ -99,7 +97,6 @@ struct PipView: View {
 #Preview {
     PipView(
         pipInstallation: .init(filePath: "/usr/bin/pip"),
-        isProjectInstallation: false,
         selectedPackage: .constant(nil)
     )
 }

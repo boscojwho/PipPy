@@ -172,14 +172,12 @@ struct PipPackageView: View {
     @State private var pipClient: PipClient
     init(
         pipInstallation: URL,
-        isProjectInstallation: Bool,
         package: PipListResponse
     ) {
         self.package = package
         _pipClient = .init(
             wrappedValue: .init(
                 installationPath: pipInstallation,
-                isProjectInstallation: isProjectInstallation, 
                 pipExecutable: pipInstallation.lastPathComponent,
                 shellClient: .init(currentDirectoryPath: pipInstallation.deletingLastPathComponent().path())
             )
@@ -236,7 +234,6 @@ struct PipPackageView: View {
 #Preview {
     PipPackageView(
         pipInstallation: .init(filePath: "/usr/bin/pip"),
-        isProjectInstallation: false,
         package: .mock()
     )
 }

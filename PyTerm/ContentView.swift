@@ -48,7 +48,6 @@ struct ContentView: View {
                     if let selectedPip = contentSelectionPreferences.selectedPip {
                         PipView(
                             pipInstallation: selectedPip,
-                            isProjectInstallation: hasVenv(),
                             selectedPackage: $contentSelection.selectedPackage
                         )
                         .id(selectedPip)
@@ -90,7 +89,6 @@ struct ContentView: View {
                 if let selectedPackage = contentSelectionPreferences.selectedPackage {
                     PipPackageView(
                         pipInstallation: selectedPip,
-                        isProjectInstallation: hasVenv(),
                         package: selectedPackage
                     )
                     .id(selectedPackage)
@@ -158,13 +156,6 @@ struct ContentView: View {
             }
             return true
         }
-    }
-    
-    private func hasVenv() -> Bool {
-        guard let selectedPip = contentSelectionPreferences.selectedPip else { return false }
-        return VenvFinder(projectUrl: selectedPip)
-            .findVenv()
-            .isEmpty == false
     }
 }
 
