@@ -56,6 +56,8 @@ struct SettingsView: View {
                 }
             }
             .padding(8)
+            
+            Spacer()
         }
         .onAppear {
             self.automaticallyChecksForUpdates = autoUpdater?.updater.automaticallyChecksForUpdates ?? false
