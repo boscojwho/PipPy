@@ -4,5 +4,9 @@
 <dict>
 	<key>NSOpenPanelUsageDescription</key>
 	<string>This app needs access to files and folders to perform its operations.</string>
+	<key>SUFeedURL</key>
+	<string>https://boscojwho.github.io/PipPy/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>slwMz2gixXrLO5RPabRGD5HegeDxip0YFmJH7b1vcaI=</string>
 </dict>
 </plist>
