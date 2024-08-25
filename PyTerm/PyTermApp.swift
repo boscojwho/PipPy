@@ -7,9 +7,20 @@
 
 import SwiftUI
 import SwiftData
+import Sparkle
 
 @main
 struct PyTermApp: App {
+    private let updaterController: SPUStandardUpdaterController
+    
+    init() {
+        updaterController = SPUStandardUpdaterController(
+            startingUpdater: true,
+            updaterDelegate: nil,
+            userDriverDelegate: nil
+        )
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -19,5 +30,10 @@ struct PyTermApp: App {
         .windowToolbarStyle(.unified(showsTitle: false))
         .defaultPosition(.center)
         .defaultSize(width: 1080, height: 720)
+        .commands {
+            CommandGroup(after: .appInfo) {
+                AutoUpdaterView(updater: updaterController.updater)
+            }
+        }
     }
 }
