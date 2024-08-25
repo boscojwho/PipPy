@@ -49,11 +49,11 @@ struct PyTermApp: App {
         
         Settings {
             SettingsView()
-                .frame(minWidth: 420, minHeight: 180)
+                .frame(minWidth: 420, minHeight: 144)
         }
         .environment(\.autoUpdater, updaterController)
         .windowResizability(.contentMinSize)
         .defaultPosition(.topTrailing)
-        .defaultSize(width: 420, height: 180)
+        .defaultSize(width: 420, height: 144)
     }
 }
