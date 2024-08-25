@@ -53,7 +53,7 @@ struct ContentView: View {
                         )
                         .id(selectedPip)
                         .toolbar {
-                            if hasVenv(), projectPipInstallations.isEmpty == false {
+                            if sidebarPreferences.sidebarFilter == .projects, projectPipInstallations.isEmpty == false {
                                 Picker("Pick a Pip Installation", selection: $contentSelection.selectedPip) {
                                     ForEach(projectPipInstallations, id: \.self) { pip in
                                         Text(pip.lastPathComponent)
