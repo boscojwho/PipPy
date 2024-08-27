@@ -8,7 +8,7 @@
             <sparkle:version>1</sparkle:version>
             <sparkle:shortVersionString>0.1.3</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://boscojwho.github.io/PipPy/PipPy.dmg" length="2538710" type="application/octet-stream" sparkle:edSignature="RDcThMD7Ii+ga9I7RUN+Hg1VinKKTJZRBwAtQGB64Mr/3fBGjdi6eUY5nl6JsWBT+6wyCTCF9o1jlQ/qiYF/Cw=="/>
+            <enclosure url="https://github.com/boscojwho/PipPy/releases/download/v0.1.3/PipPy.dmg" length="2538710" type="application/octet-stream" sparkle:edSignature="RDcThMD7Ii+ga9I7RUN+Hg1VinKKTJZRBwAtQGB64Mr/3fBGjdi6eUY5nl6JsWBT+6wyCTCF9o1jlQ/qiYF/Cw=="/>
         </item>
     </channel>
 </rss>
